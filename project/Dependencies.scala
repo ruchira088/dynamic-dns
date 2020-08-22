@@ -10,6 +10,8 @@ object Dependencies
 
   lazy val http4sBlazeServer = "org.http4s" %% "http4s-blaze-server" % HTTP4S_VERSION
 
+  lazy val http4sBlazeClient = "org.http4s" %% "http4s-blaze-client" % HTTP4S_VERSION
+
   lazy val http4sCirce = "org.http4s" %% "http4s-circe" % HTTP4S_VERSION
 
   lazy val circeGeneric = "io.circe" %% "circe-generic" % CIRCE_VERSION

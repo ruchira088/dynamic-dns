@@ -12,15 +12,15 @@ inThisBuild {
   )
 }
 
-lazy val core = (project in file("./core")).settings(libraryDependencies ++= Seq(http4sCirce))
+lazy val core = (project in file("./core")).settings(libraryDependencies ++= Seq(http4sCirce, jodaTime))
 
-lazy val web =
-  (project in file("./web"))
+lazy val api =
+  (project in file("./api"))
     .enablePlugins(BuildInfoPlugin, JavaAppPackaging)
     .settings(
-      name := "dynamic-dns-web",
+      name := "dynamic-dns-api",
       version := "0.0.1",
-      buildInfoPackage := "com.eed3si9n.ruchij.web",
+      buildInfoPackage := "com.eed3si9n.ruchij.api",
       buildInfoKeys := BuildInfoKey.ofN(name, organization, version, scalaVersion, sbtVersion),
       topLevelDirectory := None,
       libraryDependencies ++= Seq(
@@ -45,7 +45,9 @@ lazy val dnsSyncJob =
       version := "0.0.1",
       buildInfoPackage := "com.eed3si9n.ruchij.job",
       buildInfoKeys := BuildInfoKey.ofN(name, organization, version, scalaVersion, sbtVersion),
-      topLevelDirectory := None
+      topLevelDirectory := None,
+      libraryDependencies ++= Seq(http4sBlazeClient, http4sCirce, circeGeneric, pureconfig)
     )
+    .dependsOn(core)
 
 addCommandAlias("testWithCoverage", "; coverage; test; coverageReport")
