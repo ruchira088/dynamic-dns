@@ -9,5 +9,5 @@
     - name: Publish Docker image
       import_tasks: tasks/publish-docker-image.yml
       vars:
-        docker_registry:
+        docker_registry: nano.ruchij.com:32000
 

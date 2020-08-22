@@ -10,12 +10,12 @@
       import_tasks: tasks/k8s-resource-files.yml
       vars:
         docker_registry: localhost:32000
-        hostname: "{{ git_branch }}.dynamic-dns.ruchij.com"
+        hostname: "{{ git_branch }}.dynamic-dns.nano.ruchij.com"
 
     - name: Set kube_config
       import_tasks: tasks/k8s-config.yml
       vars:
-        aws_ssm_k8s_config_path:
+        aws_ssm_k8s_config_path: /k8s/config/nano
 
     - name: Deploy K8s resources
       block:
