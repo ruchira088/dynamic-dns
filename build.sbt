@@ -1,38 +1,51 @@
 import Dependencies._
 
-lazy val root =
-  (project in file("."))
+inThisBuild {
+  Seq(
+    organization := "com.ruchij",
+    scalaVersion := SCALA_VERSION,
+    maintainer := "me@ruchij.com",
+    scalacOptions ++= Seq("-Xlint", "-feature", "-Wconf:cat=lint-byname-implicit:s"),
+    addCompilerPlugin(kindProjector),
+    addCompilerPlugin(betterMonadicFor),
+    addCompilerPlugin(scalaTypedHoles)
+  )
+}
+
+lazy val core = (project in file("./core")).settings(libraryDependencies ++= Seq(http4sCirce))
+
+lazy val web =
+  (project in file("./web"))
     .enablePlugins(BuildInfoPlugin, JavaAppPackaging)
     .settings(
-      name := "dynamic-dns",
+      name := "dynamic-dns-web",
       version := "0.0.1",
-      organization := "com.ruchij",
-      scalaVersion := SCALA_VERSION,
-      maintainer := "me@ruchij.com",
-      libraryDependencies ++= rootDependencies ++ rootTestDependencies.map(_ % Test),
+      buildInfoPackage := "com.eed3si9n.ruchij.web",
       buildInfoKeys := BuildInfoKey.ofN(name, organization, version, scalaVersion, sbtVersion),
-      buildInfoPackage := "com.eed3si9n.ruchij",
       topLevelDirectory := None,
-      scalacOptions ++= Seq("-Xlint", "-feature", "-Wconf:cat=lint-byname-implicit:s"),
-      addCompilerPlugin(kindProjector),
-      addCompilerPlugin(betterMonadicFor),
-      addCompilerPlugin(scalaTypedHoles)
-)
+      libraryDependencies ++= Seq(
+        http4sDsl,
+        http4sBlazeServer,
+        http4sCirce,
+        circeGeneric,
+        circeParser,
+        circeLiteral,
+        jodaTime,
+        pureconfig,
+        logbackClassic
+      ) ++ Seq(scalaTest, pegdown).map(_ % Test)
+    )
+    .dependsOn(core)
 
-lazy val rootDependencies =
-  Seq(
-    http4sDsl,
-    http4sBlazeServer,
-    http4sCirce,
-    circeGeneric,
-    circeParser,
-    circeLiteral,
-    jodaTime,
-    pureconfig,
-    logbackClassic
-  )
-
-lazy val rootTestDependencies =
-  Seq(scalaTest, pegdown)
+lazy val dnsSyncJob =
+  (project in file("./dnsSyncJob"))
+    .enablePlugins(BuildInfoPlugin, JavaAppPackaging)
+    .settings(
+      name := "dynamic-dns-sync-job",
+      version := "0.0.1",
+      buildInfoPackage := "com.eed3si9n.ruchij.job",
+      buildInfoKeys := BuildInfoKey.ofN(name, organization, version, scalaVersion, sbtVersion),
+      topLevelDirectory := None
+    )
 
 addCommandAlias("testWithCoverage", "; coverage; test; coverageReport")

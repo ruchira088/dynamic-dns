@@ -3,10 +3,10 @@ package com.ruchij.web
 import cats.effect.Sync
 import cats.implicits.toFlatMapOps
 import com.ruchij.circe.Encoders.dateTimeEncoder
+import com.ruchij.models.RemoteAddress
+import com.ruchij.responses.IpAddressResponse
 import com.ruchij.services.health.HealthService
 import com.ruchij.web.middleware.{ExceptionHandler, NotFoundHandler}
-import com.ruchij.web.models.RemoteAddress
-import com.ruchij.web.responses.IpAddressResponse
 import io.circe.generic.auto.exportEncoder
 import org.http4s.circe.CirceEntityEncoder.circeEntityEncoder
 import org.http4s.dsl.Http4sDsl

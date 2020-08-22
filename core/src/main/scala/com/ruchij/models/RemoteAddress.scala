@@ -1,4 +1,4 @@
-package com.ruchij.web.models
+package com.ruchij.models
 
 import java.net.InetAddress
 

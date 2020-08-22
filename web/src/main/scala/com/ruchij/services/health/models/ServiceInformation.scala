@@ -2,7 +2,7 @@ package com.ruchij.services.health.models
 
 import cats.effect.Sync
 import cats.implicits.toFunctorOps
-import com.eed3si9n.ruchij.BuildInfo
+import com.eed3si9n.ruchij.web.BuildInfo
 import org.joda.time.DateTime
 
 import scala.util.Properties
