@@ -24,6 +24,8 @@ object Dependencies
 
   lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.13.0"
 
+  lazy val route53 = "software.amazon.awssdk" % "route53" % "2.14.3"
+
   lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.3"
 
   lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full

@@ -10,10 +10,10 @@ import org.http4s.client.Client
 import io.circe.generic.auto.exportDecoder
 import org.http4s.circe.CirceEntityDecoder.circeEntityDecoder
 
-class ApiHostIpRetriever[F[_]: Sync](client: Client[F], apiServerConfiguration: ApiServerConfiguration)
-    extends HostIpRetriever[F] {
+class ApiMyIpRetriever[F[_]: Sync](client: Client[F], apiServerConfiguration: ApiServerConfiguration)
+    extends MyIpRetriever[F] {
 
-  override val hostIp: F[InetAddress] =
+  override val ip: F[InetAddress] =
     client.expect[IpAddressResponse](apiServerConfiguration.url)
       .flatMap {
         case IpAddressResponse(ip) => Sync[F].delay(InetAddress.getByName(ip))

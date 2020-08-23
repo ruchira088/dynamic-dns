@@ -46,7 +46,7 @@ lazy val dnsSyncJob =
       buildInfoPackage := "com.eed3si9n.ruchij.job",
       buildInfoKeys := BuildInfoKey.ofN(name, organization, version, scalaVersion, sbtVersion),
       topLevelDirectory := None,
-      libraryDependencies ++= Seq(http4sBlazeClient, http4sCirce, circeGeneric, pureconfig)
+      libraryDependencies ++= Seq(http4sBlazeClient, http4sCirce, circeGeneric, pureconfig, route53, logbackClassic)
     )
     .dependsOn(core)
 
