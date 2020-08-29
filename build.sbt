@@ -37,6 +37,20 @@ lazy val api =
     )
     .dependsOn(core)
 
+lazy val serverless =
+  (project in file("./serverless"))
+    .settings(
+      name := "dynamic-dns-serverless-api",
+      version := "0.0.1",
+      assemblyJarName in assembly := s"${name.value}-${version.value}.jar",
+      assemblyMergeStrategy in assembly := {
+        case PathList("META-INF", _*) => MergeStrategy.discard
+        case _ => MergeStrategy.first
+      },
+      libraryDependencies ++= Seq(awsLambdaJavaCore, awsLambdaJavaEvents)
+    )
+    .dependsOn(api)
+
 lazy val dnsSyncJob =
   (project in file("./dnsSyncJob"))
     .enablePlugins(BuildInfoPlugin, JavaAppPackaging)

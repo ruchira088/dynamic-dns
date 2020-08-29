@@ -1,0 +1,28 @@
+service: dynamic-dns-serverless-api
+
+provider:
+  name: aws
+  region: ap-southeast-2
+  profile: personal
+  runtime: java11
+  stage: ${opt.stage, "development"}
+  timeout: 30
+
+package:
+  artifact: serverless/target/scala-2.13/dynamic-dns-serverless-api-0.0.1.jar
+
+functions:
+  healthCheck:
+    handler: com.ruchij.serverless.handlers.ApiGatewayRequestHandler
+    events:
+      - http:
+          method: get
+          path: /health
+
+  ipAddress:
+    handler: com.ruchij.serverless.handlers.ApiGatewayRequestHandler
+    events:
+      - http:
+          method: get
+          path: /
+

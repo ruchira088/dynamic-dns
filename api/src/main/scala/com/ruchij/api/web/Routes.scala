@@ -6,6 +6,7 @@ import cats.implicits.toFlatMapOps
 import com.ruchij.api.exceptions.RemoteIpNotDeterminableException
 import com.ruchij.core.circe.Encoders.dateTimeEncoder
 import com.ruchij.core.responses.IpAddressResponse
+import com.ruchij.core.responses.IpAddressResponse.inetSocketAddressEncoder
 import com.ruchij.api.services.health.HealthService
 import com.ruchij.api.web.middleware.{ExceptionHandler, NotFoundHandler}
 import io.circe.generic.auto.exportEncoder
@@ -21,16 +22,15 @@ object Routes {
 
     val routes: HttpRoutes[F] =
       HttpRoutes.of {
-        case GET -> Root / "service" =>
+        case GET -> Root / "health" =>
           healthService
             .serviceInformation()
             .flatMap(serviceInformation => Ok(serviceInformation))
 
-        case request @ GET -> Root / "ip" =>
+        case request @ GET -> Root =>
           request.remote
             .fold[F[Response[F]]](ApplicativeError[F, Throwable].raiseError(RemoteIpNotDeterminableException)) {
-              inetSocketAddress =>
-                Ok(IpAddressResponse(inetSocketAddress.getAddress.getHostAddress))
+              inetSocketAddress => Ok(IpAddressResponse(inetSocketAddress))
             }
       }
 

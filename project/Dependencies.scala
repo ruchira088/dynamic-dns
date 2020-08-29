@@ -24,7 +24,11 @@ object Dependencies
 
   lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.13.0"
 
-  lazy val route53 = "software.amazon.awssdk" % "route53" % "2.14.3"
+  lazy val route53 = "software.amazon.awssdk" % "route53" % "2.14.7"
+
+  lazy val awsLambdaJavaCore = "com.amazonaws" % "aws-lambda-java-core" % "1.2.1"
+
+  lazy val awsLambdaJavaEvents = "com.amazonaws" % "aws-lambda-java-events" % "3.2.0"
 
   lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.3"
 
@@ -34,7 +38,7 @@ object Dependencies
 
   lazy val betterMonadicFor = "com.olegpy" %% "better-monadic-for" % "0.3.1"
 
-  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.1"
+  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.2"
 
   lazy val pegdown = "org.pegdown" % "pegdown" % "1.6.0"
 }
