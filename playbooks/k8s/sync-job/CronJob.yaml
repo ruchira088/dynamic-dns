@@ -13,6 +13,8 @@ spec:
             - name: dynamic-dns-sync-job-container
               image: {{ docker_registry }}/dynamic-dns-sync-job:{{ git_commit }}
               envFrom:
+                - configMapRef:
+                    name: dynamic-dns-sync-job-config-map
                 - secretRef:
                     name: dynamic-dns-sync-job-secrets
 
