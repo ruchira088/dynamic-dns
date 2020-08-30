@@ -1,7 +1,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: dynamic-dns-sync-job-{{ git_commit }}
+  name: dynamic-dns-sync-job
   namespace: dynamic-dns-{{ git_branch }}
 spec:
   schedule: "*/5 * * * *"
