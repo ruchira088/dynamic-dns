@@ -4,6 +4,10 @@ metadata:
   name: dynamic-dns-api-ingress
   namespace: dynamic-dns-{{ git_branch }}
 spec:
+  tls:
+    - secretName: dynamic-dns-api-tls
+      hosts:
+        - {{ hostname }}
   rules:
     - host: {{ hostname }}
       http:
