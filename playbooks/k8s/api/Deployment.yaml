@@ -1,39 +1,34 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dynamic-dns-deployment
+  name: dynamic-dns-api-deployment
   namespace: dynamic-dns-{{ git_branch }}
 spec:
   selector:
     matchLabels:
-      app: dynamic-dns
+      app: dynamic-dns-api
       branch: {{ git_branch }}
   replicas: 1
   template:
     metadata:
       labels:
-        app: dynamic-dns
+        app: dynamic-dns-api
         branch: {{ git_branch }}
     spec:
       containers:
-        - name: dynamic-dns-container
-          image: {{ docker_registry }}/dynamic-dns:{{ git_commit }}
-          envFrom:
-            - configMapRef:
-                name: dynamic-dns-config-map
-            - secretRef:
-                name: dynamic-dns-secrets
+        - name: dynamic-dns-api-container
+          image: {{ docker_registry }}/dynamic-dns-api:{{ git_commit }}
           readinessProbe:
             httpGet:
               port: http4s-port
-              path: /service
+              path: /health
               httpHeaders:
                 - name: X-Correlation-ID
                   value: k8s-readiness-probe
           livenessProbe:
             httpGet:
               port: http4s-port
-              path: /service
+              path: /health
               httpHeaders:
                 - name: X-Correlation-ID
                   value: k8s-liveness-probe
@@ -42,7 +37,7 @@ spec:
             failureThreshold: 5
             httpGet:
               port: http4s-port
-              path: /service
+              path: /health
               httpHeaders:
                 - name: X-Correlation-ID
                   value: k8s-startup-probe

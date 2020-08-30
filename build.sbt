@@ -51,8 +51,8 @@ lazy val serverless =
     )
     .dependsOn(api)
 
-lazy val dnsSyncJob =
-  (project in file("./dnsSyncJob"))
+lazy val syncJob =
+  (project in file("./sync-job"))
     .enablePlugins(BuildInfoPlugin, JavaAppPackaging)
     .settings(
       name := "dynamic-dns-sync-job",
@@ -64,4 +64,7 @@ lazy val dnsSyncJob =
     )
     .dependsOn(core)
 
-addCommandAlias("testWithCoverage", "; coverage; test; coverageReport")
+addCommandAlias("cleanAll", "; serverless/clean; api/clean; syncJob/clean; core/clean")
+addCommandAlias("compileAll", "; core/compile; syncJob/compile; api/compile; serverless/compile")
+addCommandAlias("refreshAll", "; cleanAll; compileAll")
+

@@ -1,0 +1,18 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: dynamic-dns-sync-job-{{ git_commit }}
+  namespace: dynamic-dns-{{ git_branch }}
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: dynamic-dns-sync-job-container
+              image: {{ docker_registry }}/dynamic-dns-sync-job:{{ git_commit }}
+              envFrom:
+                - secretRef:
+                    name: dynamic-dns-sync-job-secrets
+

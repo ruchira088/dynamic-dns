@@ -1,13 +1,22 @@
 ---
+- name: Build Docker images
+  import_playbook: build-docker-images.yml
+
 - hosts: localhost
   connection: local
 
-  tasks:
-    - name: Build Docker images
-      import_tasks: tasks/build-docker-prod.yml
+  vars:
+    docker_registry: server.ruchij.com:32000
 
-    - name: Publish Docker image
+  tasks:
+    - name: Dynamic DNS API
       import_tasks: tasks/publish-docker-image.yml
       vars:
-        docker_registry: nano.ruchij.com:32000
+        app_name: api
+
+    - name: Dynamic DNS sync job
+      import_tasks: tasks/publish-docker-image.yml
+      vars:
+        app_name: sync-job
+
 

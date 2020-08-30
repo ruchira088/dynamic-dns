@@ -1,15 +1,3 @@
-- name: Create output directories
-  block:
-    - name: Delete existing output directory
-      file:
-        path: k8s-output
-        state: absent
-
-    - name: Create output directory
-      file:
-        path: k8s-output
-        state: directory
-
 - name: Gather git information
   import_tasks: tasks/git-info.yml
 
@@ -19,6 +7,6 @@
 - name: Render K8s resource files
   template:
     src: "{{ item }}"
-    dest: k8s-output/{{ item | basename }}
+    dest: k8s-output/{{ app_name }}/{{ item | basename }}
   with_fileglob:
-    - k8s/*.yaml
+    - k8s/{{ app_name }}/*.yaml

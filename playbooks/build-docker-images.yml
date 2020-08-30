@@ -3,5 +3,14 @@
   connection: local
 
   tasks:
-    - name: Build Docker-Compose image
+    - name: Build Dynamic DNS API
       import_tasks: tasks/build-docker-prod.yml
+      vars:
+        app_name: api
+        sbt_project: api
+
+    - name: Build Dynamic DNS sync job
+      import_tasks: tasks/build-docker-prod.yml
+      vars:
+        app_name: sync-job
+        sbt_project: syncJob

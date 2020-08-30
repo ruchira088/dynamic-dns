@@ -4,11 +4,10 @@ import cats.ApplicativeError
 import cats.effect.Sync
 import cats.implicits.toFlatMapOps
 import com.ruchij.api.exceptions.RemoteIpNotDeterminableException
-import com.ruchij.core.circe.Encoders.dateTimeEncoder
-import com.ruchij.core.responses.IpAddressResponse
-import com.ruchij.core.responses.IpAddressResponse.inetSocketAddressEncoder
 import com.ruchij.api.services.health.HealthService
 import com.ruchij.api.web.middleware.{ExceptionHandler, NotFoundHandler}
+import com.ruchij.core.circe.Encoders.dateTimeEncoder
+import com.ruchij.core.responses.IpAddressResponse
 import io.circe.generic.auto.exportEncoder
 import org.http4s.circe.CirceEntityEncoder.circeEntityEncoder
 import org.http4s.dsl.Http4sDsl
@@ -29,6 +28,9 @@ object Routes {
 
         case request @ GET -> Root =>
           request.remote
+            .map { inetSocketAddress =>
+              Option(inetSocketAddress.getAddress).map(_.getHostAddress).getOrElse(inetSocketAddress.getHostName)
+            }
             .fold[F[Response[F]]](ApplicativeError[F, Throwable].raiseError(RemoteIpNotDeterminableException)) {
               inetSocketAddress => Ok(IpAddressResponse(inetSocketAddress))
             }

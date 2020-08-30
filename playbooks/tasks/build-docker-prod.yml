@@ -1,6 +1,6 @@
 - name: Print start message
   debug:
-    msg: Started building dynamic-dns
+    msg: Started building {{ app_name }}
 
 - name: Create output directory
   file:
@@ -8,14 +8,14 @@
     state: directory
 
 - name: Clean and build sbt project
-  shell: cd ../ && sbt clean universal:packageZipTarball
+  shell: cd ../ && sbt cleanAll {{ sbt_project }}/universal:packageZipTarball
 
 - name: Gather git information
   import_tasks: git-info.yml
 
 - name: Generate the Dockerfile
   template:
-    src: docker/Dockerfile-prod.j2
+    src: docker/{{ app_name }}/Dockerfile.j2
     dest: docker-output/Dockerfile
   vars:
     build_timestamp: "{{ ansible_date_time.iso8601 }}"
@@ -24,10 +24,10 @@
   shell: |
     docker build \
       -f docker-output/Dockerfile \
-      -t dynamic-dns:latest \
-      -t dynamic-dns:{{ git_commit }} \
-      -t dynamic-dns:{{ git_branch }}-{{ ansible_date_time.iso8601_basic_short }} \
-      ../target/universal/
+      -t dynamic-dns-{{ app_name }}:latest \
+      -t dynamic-dns-{{ app_name }}:{{ git_commit }} \
+      -t dynamic-dns-{{ app_name }}:{{ git_branch }}-{{ ansible_date_time.iso8601_basic_short }} \
+      ../{{ app_name }}/target/universal/
 
 - name: Clean up output directory
   file:
@@ -36,4 +36,4 @@
 
 - name: Print finish message
   debug:
-    msg: Completed building dynamic-dns
+    msg: Completed building {{ app_name }}

@@ -7,7 +7,7 @@ import com.ruchij.job.config.{DnsConfiguration, JobConfiguration}
 import com.ruchij.job.models.JobResult
 import com.ruchij.job.services.dns.{AwsRoute53Service, DnsManagementService}
 import com.ruchij.job.services.hostname.{HostnameResolver, LocalHostnameResolver}
-import com.ruchij.job.services.ip.{ApiMyIpRetriever, AwsMyIpRetriever, MyIpRetriever}
+import com.ruchij.job.services.ip.{ApiMyIpRetriever, MyIpRetriever}
 import org.http4s.client.blaze.BlazeClientBuilder
 import pureconfig.ConfigSource
 import software.amazon.awssdk.regions.Region
@@ -32,12 +32,12 @@ object JobApp extends IOApp {
     BlazeClientBuilder[F](ExecutionContext.global).resource.use { httpClient =>
       val hostnameResolver: LocalHostnameResolver[F] = new LocalHostnameResolver[F]
       val apiMyIpRetriever: ApiMyIpRetriever[F] = new ApiMyIpRetriever[F](httpClient, jobConfiguration.apiServer)
-      val awsMyIpRetriever: AwsMyIpRetriever[F] = new AwsMyIpRetriever[F](httpClient)
+//      val awsMyIpRetriever: AwsMyIpRetriever[F] = new AwsMyIpRetriever[F](httpClient)
 
       val route53AsyncClient: Route53AsyncClient = Route53AsyncClient.builder().region(Region.AWS_GLOBAL).build()
       val dnsManagementService = new AwsRoute53Service[F](route53AsyncClient)
 
-      execute[F](hostnameResolver, awsMyIpRetriever, dnsManagementService, jobConfiguration.dns)
+      execute[F](hostnameResolver, apiMyIpRetriever, dnsManagementService, jobConfiguration.dns)
     }
 
   def execute[F[_]: Monad](

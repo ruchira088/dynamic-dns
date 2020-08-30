@@ -1,0 +1,11 @@
+FROM openjdk:11-jre-slim
+
+ENV GIT_BRANCH {{ git_branch }}
+ENV GIT_COMMIT {{ git_commit }}
+ENV BUILD_TIMESTAMP {{ build_timestamp }}
+
+WORKDIR /opt/dynamic-dns-sync-job
+
+ADD dynamic-dns-sync-job-*.tgz .
+
+CMD [ "/opt/dynamic-dns-sync-job/bin/dynamic-dns-sync-job" ]

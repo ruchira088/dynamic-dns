@@ -1,4 +1,7 @@
+- name: Gather git information
+  import_tasks: git-info.yml
+
 - name: Publish Docker image
   shell: |
-    docker tag dynamic-dns:{{ git_commit }} {{ docker_registry }}/dynamic-dns:{{ git_commit }} && \
-    docker push {{ docker_registry }}/dynamic-dns:{{ git_commit }}
+    docker tag dynamic-dns-{{ app_name }}:{{ git_commit }} {{ docker_registry }}/dynamic-dns-{{ app_name }}:{{ git_commit }} && \
+    docker push {{ docker_registry }}/dynamic-dns-{{ app_name }}:{{ git_commit }}
