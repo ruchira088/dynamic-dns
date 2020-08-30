@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Build serverless fat JAR
+      shell: cd ../ && sbt cleanAll serverless/assembly
+
+    - name: Install npm dependencies
+      command: npm --prefix serverless install
+
+    - name: Initialize Serverless applcation
+      command: npm --prefix serverless run init
+
+    - name: Deploy Serverless application
+      command: npm --prefix serverless run deploy

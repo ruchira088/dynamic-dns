@@ -1,5 +1,8 @@
 service: dynamic-dns-serverless-api
 
+plugins:
+  - serverless-domain-manager
+
 provider:
   name: aws
   region: ap-southeast-2
@@ -8,8 +11,16 @@ provider:
   stage: ${opt.stage, "development"}
   timeout: 30
 
+custom:
+  customDomain:
+    domainName: ip.ruchij.com
+    certificateArn: arn:aws:acm:ap-southeast-2:365562660444:certificate/ca2ecc8d-0564-4c7a-a8c0-37509b690206
+    endpointType: regional
+    createRoute53Record: true
+    stage: ${self:provider.stage}
+
 package:
-  artifact: serverless/target/scala-2.13/dynamic-dns-serverless-api-0.0.1.jar
+  artifact: ../../serverless/target/scala-2.13/dynamic-dns-serverless-api-0.0.1.jar
 
 functions:
   healthCheck:
