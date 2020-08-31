@@ -65,13 +65,13 @@
             - name: Wait for successful deployment
               command: kubectl rollout status deployment dynamic-dns-api-deployment --kubeconfig k8s-output/kubeconfig -n dynamic-dns-{{ git_branch }}
 
-#        - name: Deploy sync job
-#          block:
-#            - name: Create ConfigMap
-#              command: kubectl apply -f k8s-output/sync-job/ConfigMap.yaml --kubeconfig k8s-output/kubeconfig
-#
-#            - name: Deploy CronJob
-#              command: kubectl apply -f k8s-output/sync-job --kubeconfig k8s-output/kubeconfig
+        - name: Deploy sync job
+          block:
+            - name: Create ConfigMap
+              command: kubectl apply -f k8s-output/sync-job/ConfigMap.yaml --kubeconfig k8s-output/kubeconfig
+
+            - name: Deploy CronJob
+              command: kubectl apply -f k8s-output/sync-job --kubeconfig k8s-output/kubeconfig
 
     - name: Clean up output directory
       file:

@@ -9,6 +9,7 @@ spec:
     spec:
       template:
         spec:
+          restartPolicy: Never
           containers:
             - name: dynamic-dns-sync-job-container
               image: {{ docker_registry }}/dynamic-dns-sync-job:{{ git_commit }}
