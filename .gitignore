@@ -6,3 +6,5 @@ target
 
 node_modules
 .serverless
+
+playbooks/k8s-output
