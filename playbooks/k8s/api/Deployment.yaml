@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: dynamic-dns-api-container
-          image: {{ docker_registry }}/dynamic-dns-api:{{ git_commit }}
+          image: ruchira088/dynamic-dns-api:{{ git_commit }}
           readinessProbe:
             httpGet:
               port: http4s-port

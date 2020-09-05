@@ -8,3 +8,4 @@ node_modules
 .serverless
 
 playbooks/k8s-output
+playbooks/docker-output

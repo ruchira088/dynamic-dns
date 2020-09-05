@@ -5,9 +5,6 @@
 - hosts: localhost
   connection: local
 
-  vars:
-    docker_registry: server.ruchij.com:32000
-
   tasks:
     - name: Dynamic DNS API
       import_tasks: tasks/publish-docker-image.yml
@@ -18,5 +15,3 @@
       import_tasks: tasks/publish-docker-image.yml
       vars:
         app_name: sync-job
-
-

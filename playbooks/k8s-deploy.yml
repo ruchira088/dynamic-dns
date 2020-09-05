@@ -37,14 +37,12 @@
         - name: Render API K8s resource files
           import_tasks: tasks/k8s-resource-files.yml
           vars:
-            docker_registry: localhost:32000
             app_name: api
             hostname: ip.home.ruchij.com
 
-        - name: Render API K8s resource files
+        - name: Render sync job K8s resource files
           import_tasks: tasks/k8s-resource-files.yml
           vars:
-            docker_registry: localhost:32000
             app_name: sync-job
 
     - name: Set kube_config
