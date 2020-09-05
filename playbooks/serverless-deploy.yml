@@ -3,6 +3,9 @@
   connection: local
 
   tasks:
+    - name: Gather git information
+      import_tasks: tasks/git-info.yml
+
     - name: Build serverless fat JAR
       shell: cd ../ && sbt cleanAll serverless/assembly
 
@@ -13,4 +16,4 @@
       command: npm --prefix serverless run init
 
     - name: Deploy Serverless application
-      command: npm --prefix serverless run deploy
+      command: npm --prefix serverless run deploy --git_branch {{ git_branch }} --git_commit {{ git_commit }} --build_timestamp {{ ansible_date_time.iso8601 }}

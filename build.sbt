@@ -12,7 +12,7 @@ inThisBuild {
   )
 }
 
-lazy val core = (project in file("./core")).settings(libraryDependencies ++= Seq(http4sCirce, jodaTime))
+lazy val core = (project in file("./core")).settings(libraryDependencies ++= Seq(http4sCirce, jodaTime, pureconfig))
 
 lazy val api =
   (project in file("./api"))

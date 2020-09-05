@@ -10,6 +10,10 @@ provider:
   runtime: java11
   stage: ${opt.stage, "development"}
   timeout: 30
+  environment:
+    GIT_COMMIT: ${opt:git_commit}
+    GIT_BRANCH: ${opt:git_branch}
+    BUILD_TIMESTAMP: ${opt:build_timestamp}
 
 custom:
   customDomain:
