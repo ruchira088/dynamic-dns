@@ -2,12 +2,7 @@
   "name": "serverless-deployment",
   "version": "0.0.1",
   "description": "Deploy API to AWS Lambda",
-  "scripts": {
-    "init": "serverless create_domain",
-    "deploy": "serverless deploy -v"
-  },
   "devDependencies": {
-    "serverless": "^1.80.0",
     "serverless-domain-manager": "^4.2.0"
   }
 }

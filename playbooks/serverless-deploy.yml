@@ -13,7 +13,7 @@
       command: npm --prefix serverless install
 
     - name: Initialize Serverless applcation
-      command: npm --prefix serverless run init
+      shell: cd serverless && serverless create_domain
 
     - name: Deploy Serverless application
-      command: npm --prefix serverless run deploy --git_branch {{ git_branch }} --git_commit {{ git_commit }} --build_timestamp {{ ansible_date_time.iso8601 }}
+      shell: cd serverless && serverless deploy -v --git_branch {{ git_branch }} --git_commit {{ git_commit }} --build_timestamp {{ ansible_date_time.iso8601 }}
