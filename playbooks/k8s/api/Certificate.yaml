@@ -2,7 +2,7 @@ apiVersion: cert-manager.io/v1alpha2
 kind: Certificate
 metadata:
   name: dynamic-dns-api-certificate
-  namespace: dynamic-dns-{{ git_branch }}
+  namespace: {{ namespace }}
 spec:
   secretName: dynamic-dns-api-tls
   issuerRef:

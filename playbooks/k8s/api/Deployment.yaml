@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dynamic-dns-api-deployment
-  namespace: dynamic-dns-{{ git_branch }}
+  namespace: {{ namespace }}
 spec:
   selector:
     matchLabels:

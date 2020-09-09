@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: dynamic-dns-sync-job-config-map
-  namespace: dynamic-dns-{{ git_branch }}
+  namespace: {{ namespace }}
 data:
 {% for key, value in sync_job.config_values.items() %}
   {{ key }}: "{{ value }}"

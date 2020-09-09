@@ -27,6 +27,9 @@
     - name: Gather git information
       import_tasks: tasks/git-info.yml
 
+    - set_fact:
+        namespace: "{{ 'dynamic-dns' if git_branch == 'master' else 'dynamic-dns-' + git_branch }}"
+
     - name: Render K8s resource files
       block:
         - name: Render K8s Namespace
@@ -38,7 +41,8 @@
           import_tasks: tasks/k8s-resource-files.yml
           vars:
             app_name: api
-            hostname: ip.home.ruchij.com
+            domain: ip.home.ruchij.com
+            hostname: "{{ domain if git_branch == 'master' else git_branch + '.' + domain }}"
 
         - name: Render sync job K8s resource files
           import_tasks: tasks/k8s-resource-files.yml
@@ -59,7 +63,7 @@
               command: kubectl apply -f k8s-output/api --kubeconfig k8s-output/kubeconfig
 
             - name: Wait for successful deployment
-              command: kubectl rollout status deployment dynamic-dns-api-deployment --kubeconfig k8s-output/kubeconfig -n dynamic-dns-{{ git_branch }}
+              command: kubectl rollout status deployment dynamic-dns-api-deployment --kubeconfig k8s-output/kubeconfig -n {{ namespace }}
 
         - name: Deploy sync job
           block:

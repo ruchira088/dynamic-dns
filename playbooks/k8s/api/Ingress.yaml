@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: dynamic-dns-api-ingress
-  namespace: dynamic-dns-{{ git_branch }}
+  namespace: {{ namespace }}
 spec:
   tls:
     - secretName: dynamic-dns-api-tls
