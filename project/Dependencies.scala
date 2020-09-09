@@ -24,7 +24,7 @@ object Dependencies
 
   lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.13.0"
 
-  lazy val route53 = "software.amazon.awssdk" % "route53" % "2.14.12"
+  lazy val route53 = "software.amazon.awssdk" % "route53" % "2.14.13"
 
   lazy val awsLambdaJavaCore = "com.amazonaws" % "aws-lambda-java-core" % "1.2.1"
 
