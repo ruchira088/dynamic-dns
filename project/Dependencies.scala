@@ -2,33 +2,33 @@ import sbt._
 
 object Dependencies
 {
-  val SCALA_VERSION = "2.13.3"
-  val HTTP4S_VERSION = "0.21.7"
-  val CIRCE_VERSION = "0.13.0"
+  val ScalaVersion = "2.13.3"
+  val Http4sVersion = "0.21.7"
+  val CirceVersion = "0.13.0"
 
-  lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % HTTP4S_VERSION
+  lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
 
-  lazy val http4sBlazeServer = "org.http4s" %% "http4s-blaze-server" % HTTP4S_VERSION
+  lazy val http4sBlazeServer = "org.http4s" %% "http4s-blaze-server" % Http4sVersion
 
-  lazy val http4sBlazeClient = "org.http4s" %% "http4s-blaze-client" % HTTP4S_VERSION
+  lazy val http4sBlazeClient = "org.http4s" %% "http4s-blaze-client" % Http4sVersion
 
-  lazy val http4sCirce = "org.http4s" %% "http4s-circe" % HTTP4S_VERSION
+  lazy val http4sCirce = "org.http4s" %% "http4s-circe" % Http4sVersion
 
-  lazy val circeGeneric = "io.circe" %% "circe-generic" % CIRCE_VERSION
+  lazy val circeGeneric = "io.circe" %% "circe-generic" % CirceVersion
 
-  lazy val circeParser = "io.circe" %% "circe-parser" % CIRCE_VERSION
+  lazy val circeParser = "io.circe" %% "circe-parser" % CirceVersion
 
-  lazy val circeLiteral = "io.circe" %% "circe-literal" % CIRCE_VERSION
+  lazy val circeLiteral = "io.circe" %% "circe-literal" % CirceVersion
 
   lazy val jodaTime = "joda-time" % "joda-time" % "2.10.6"
 
-  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.13.0"
+  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.14.0"
 
-  lazy val route53 = "software.amazon.awssdk" % "route53" % "2.14.13"
+  lazy val route53 = "software.amazon.awssdk" % "route53" % "2.15.7"
 
   lazy val awsLambdaJavaCore = "com.amazonaws" % "aws-lambda-java-core" % "1.2.1"
 
-  lazy val awsLambdaJavaEvents = "com.amazonaws" % "aws-lambda-java-events" % "3.2.0"
+  lazy val awsLambdaJavaEvents = "com.amazonaws" % "aws-lambda-java-events" % "3.4.0"
 
   lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.3"
 

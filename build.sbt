@@ -3,7 +3,7 @@ import Dependencies._
 inThisBuild {
   Seq(
     organization := "com.ruchij",
-    scalaVersion := SCALA_VERSION,
+    scalaVersion := Dependencies.ScalaVersion,
     maintainer := "me@ruchij.com",
     scalacOptions ++= Seq("-Xlint", "-feature", "-Wconf:cat=lint-byname-implicit:s"),
     addCompilerPlugin(kindProjector),
