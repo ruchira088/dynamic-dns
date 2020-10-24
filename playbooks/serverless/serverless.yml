@@ -7,7 +7,7 @@ provider:
   name: aws
   region: ap-southeast-2
   runtime: java11
-  stage: ${opt.stage, development}
+  stage: ${opt:stage, "development"}
   timeout: 30
   environment:
     GIT_COMMIT: ${opt:git_commit}

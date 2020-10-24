@@ -3,7 +3,7 @@ import sbt._
 object Dependencies
 {
   val ScalaVersion = "2.13.3"
-  val Http4sVersion = "0.21.7"
+  val Http4sVersion = "0.21.8"
   val CirceVersion = "0.13.0"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
@@ -20,11 +20,11 @@ object Dependencies
 
   lazy val circeLiteral = "io.circe" %% "circe-literal" % CirceVersion
 
-  lazy val jodaTime = "joda-time" % "joda-time" % "2.10.6"
+  lazy val jodaTime = "joda-time" % "joda-time" % "2.10.8"
 
   lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.14.0"
 
-  lazy val route53 = "software.amazon.awssdk" % "route53" % "2.15.7"
+  lazy val route53 = "software.amazon.awssdk" % "route53" % "2.15.14"
 
   lazy val awsLambdaJavaCore = "com.amazonaws" % "aws-lambda-java-core" % "1.2.1"
 

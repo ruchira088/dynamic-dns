@@ -16,4 +16,9 @@
       shell: cd serverless && serverless create_domain
 
     - name: Deploy Serverless application
-      shell: cd serverless && serverless deploy -v --git_branch {{ git_branch }} --git_commit {{ git_commit }} --build_timestamp {{ ansible_date_time.iso8601 }}
+      shell: |
+        cd serverless &&
+          serverless deploy -v \
+            --git_branch {{ git_branch }} \
+            --git_commit {{ git_commit }} \
+            --build_timestamp {{ ansible_date_time.iso8601 }}
