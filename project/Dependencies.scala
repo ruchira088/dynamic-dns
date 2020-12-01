@@ -3,7 +3,7 @@ import sbt._
 object Dependencies
 {
   val ScalaVersion = "2.13.4"
-  val Http4sVersion = "0.21.11"
+  val Http4sVersion = "0.21.13"
   val CirceVersion = "0.13.0"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
@@ -24,7 +24,7 @@ object Dependencies
 
   lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.14.0"
 
-  lazy val route53 = "software.amazon.awssdk" % "route53" % "2.15.33"
+  lazy val route53 = "software.amazon.awssdk" % "route53" % "2.15.36"
 
   lazy val awsLambdaJavaCore = "com.amazonaws" % "aws-lambda-java-core" % "1.2.1"
 
@@ -32,7 +32,7 @@ object Dependencies
 
   lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.3"
 
-  lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.11.1" cross CrossVersion.full
+  lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.11.2" cross CrossVersion.full
 
   lazy val scalaTypedHoles = "com.github.cb372" % "scala-typed-holes" % "0.1.6" cross CrossVersion.full
 
