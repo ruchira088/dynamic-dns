@@ -3,6 +3,6 @@
   "version": "0.0.1",
   "description": "Deploy API to AWS Lambda",
   "devDependencies": {
-    "serverless-domain-manager": "^4.2.0"
+    "serverless-domain-manager": "^5.1.0"
   }
 }

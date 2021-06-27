@@ -3,8 +3,8 @@ import sbt._
 object Dependencies
 {
   val ScalaVersion = "2.13.6"
-  val Http4sVersion = "0.21.23"
-  val CirceVersion = "0.13.0"
+  val Http4sVersion = "0.21.24"
+  val CirceVersion = "0.14.1"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
 
@@ -22,13 +22,13 @@ object Dependencies
 
   lazy val jodaTime = "joda-time" % "joda-time" % "2.10.10"
 
-  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.15.0"
+  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.16.0"
 
-  lazy val route53 = "software.amazon.awssdk" % "route53" % "2.16.67"
+  lazy val route53 = "software.amazon.awssdk" % "route53" % "2.16.91"
 
   lazy val awsLambdaJavaCore = "com.amazonaws" % "aws-lambda-java-core" % "1.2.1"
 
-  lazy val awsLambdaJavaEvents = "com.amazonaws" % "aws-lambda-java-events" % "3.8.0"
+  lazy val awsLambdaJavaEvents = "com.amazonaws" % "aws-lambda-java-events" % "3.9.0"
 
   lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.3"
 

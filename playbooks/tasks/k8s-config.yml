@@ -3,7 +3,14 @@
     path: k8s-output
     state: directory
 
-- name: Create K8s config file
-  copy:
-    dest: k8s-output/kubeconfig
-    content: "{{ lookup('aws_ssm', '/k8s/config/home', region='ap-southeast-2') }}"
+- name: Create K8s config files
+  block:
+    - name: Retrieve the K8s config file for API server
+      copy:
+        dest: k8s-output/api-server-kubeconfig
+        content: "{{ lookup('aws_ssm', '/infrastructure/dev/k8s/config', region='ap-southeast-2') }}"
+
+    - name: Retrieve the K8s config file for sync job
+      copy:
+        dest: k8s-output/sync-job-kubeconfig
+        content: "{{ lookup('aws_ssm', '/infrastructure/prod/k8s/config', region='ap-southeast-2') }}"

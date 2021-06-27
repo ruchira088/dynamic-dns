@@ -41,7 +41,7 @@
           import_tasks: tasks/k8s-resource-files.yml
           vars:
             app_name: api
-            domain: ip.home.ruchij.com
+            domain: ip.dev.ruchij.com
             hostname: "{{ domain if git_branch == 'master' else git_branch + '.' + domain }}"
 
         - name: Render sync job K8s resource files
@@ -54,24 +54,29 @@
 
     - name: Deploy K8s resources
       block:
-        - name: Create Namespace
-          command: kubectl apply -f k8s-output/Namespace.yaml --kubeconfig k8s-output/kubeconfig
+        - name: Create Namespaces
+          block:
+            - name: Create Namespace in API server
+              command: kubectl apply -f k8s-output/Namespace.yaml --kubeconfig k8s-output/api-server-kubeconfig
+
+            - name: Create Namespace in Sync job
+              command: kubectl apply -f k8s-output/Namespace.yaml --kubeconfig k8s-output/sync-job-kubeconfig
 
         - name: Deploy API
           block:
             - name: Deploy application
-              command: kubectl apply -f k8s-output/api --kubeconfig k8s-output/kubeconfig
+              command: kubectl apply -f k8s-output/api --kubeconfig k8s-output/api-server-kubeconfig
 
             - name: Wait for successful deployment
-              command: kubectl rollout status deployment dynamic-dns-api-deployment --kubeconfig k8s-output/kubeconfig -n {{ namespace }}
+              command: kubectl rollout status deployment dynamic-dns-api-deployment --kubeconfig k8s-output/api-server-kubeconfig -n {{ namespace }}
 
         - name: Deploy sync job
           block:
             - name: Create ConfigMap
-              command: kubectl apply -f k8s-output/sync-job/ConfigMap.yaml --kubeconfig k8s-output/kubeconfig
+              command: kubectl apply -f k8s-output/sync-job/ConfigMap.yaml --kubeconfig k8s-output/sync-job-kubeconfig
 
             - name: Deploy CronJob
-              command: kubectl apply -f k8s-output/sync-job --kubeconfig k8s-output/kubeconfig
+              command: kubectl apply -f k8s-output/sync-job --kubeconfig k8s-output/sync-job-kubeconfig
 
     - name: Clean up output directory
       file:
