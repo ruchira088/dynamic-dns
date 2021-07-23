@@ -63,8 +63,3 @@ lazy val syncJob =
       libraryDependencies ++= Seq(http4sBlazeClient, http4sCirce, circeGeneric, pureconfig, route53, logbackClassic)
     )
     .dependsOn(core)
-
-addCommandAlias("cleanAll", "; serverless/clean; api/clean; syncJob/clean; core/clean")
-addCommandAlias("compileAll", "; core/compile; syncJob/compile; api/compile; serverless/compile")
-addCommandAlias("refreshAll", "; cleanAll; compileAll")
-
