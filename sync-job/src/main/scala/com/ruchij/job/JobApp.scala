@@ -9,7 +9,7 @@ import com.ruchij.job.models.JobResult
 import com.ruchij.job.services.dns.{AwsRoute53Service, DnsManagementService}
 import com.ruchij.job.services.hostname.{HostnameResolver, LocalHostnameResolver}
 import com.ruchij.job.services.ip.{ApiMyIpRetriever, AwsMyIpRetriever, ConsolidatedMyIpRetriever, MyIpRetriever}
-import org.http4s.client.blaze.BlazeClientBuilder
+import org.http4s.blaze.client.BlazeClientBuilder
 import pureconfig.ConfigSource
 import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.route53.Route53AsyncClient

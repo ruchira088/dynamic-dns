@@ -28,8 +28,8 @@ object Routes {
 
         case request @ GET -> Root =>
           request.remote
-            .map { inetSocketAddress =>
-              Option(inetSocketAddress.getAddress).map(_.getHostAddress).getOrElse(inetSocketAddress.getHostName)
+            .flatMap { inetSocketAddress =>
+              Option(inetSocketAddress.host).map(_.toUriString)
             }
             .fold[F[Response[F]]](ApplicativeError[F, Throwable].raiseError(RemoteIpNotDeterminableException)) {
               inetSocketAddress => Ok(IpAddressResponse(inetSocketAddress))

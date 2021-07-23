@@ -4,7 +4,7 @@ import cats.effect.{ExitCode, IO, IOApp}
 import com.ruchij.api.config.ServiceConfiguration
 import com.ruchij.api.services.health.HealthServiceImpl
 import com.ruchij.api.web.Routes
-import org.http4s.server.blaze.BlazeServerBuilder
+import org.http4s.blaze.server.BlazeServerBuilder
 import pureconfig.ConfigSource
 
 import scala.concurrent.ExecutionContext

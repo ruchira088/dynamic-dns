@@ -1,16 +1,16 @@
 package com.ruchij.serverless
 
-import java.net.InetSocketAddress
-
 import cats.Applicative
 import cats.effect.Sync
 import cats.implicits._
 import com.amazonaws.services.lambda.runtime.events.{APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent}
+import com.comcast.ip4s.{Ipv4Address, Ipv6Address, Port, SocketAddress}
 import com.ruchij.core.types.FunctionKTypes.eitherToF
 import fs2.Stream
-import io.chrisdavenport.vault.Vault
+import org.typelevel.vault.Vault
 import org.http4s.Request.Connection
 import org.http4s._
+import org.typelevel.ci.CIString
 
 import scala.jdk.CollectionConverters._
 
@@ -43,7 +43,7 @@ object Transformers {
           headers = Option(apiGatewayProxyRequestEvent.getHeaders)
             .map {
               _.asScala.toMap.map {
-                case (key, value) => Header(key, value)
+                case (key, value) => Header.Raw(CIString(key), value)
               }
             }
             .map(headers => Headers(headers.toList))
@@ -52,9 +52,11 @@ object Transformers {
           attributes <- Option(apiGatewayProxyRequestEvent.getRequestContext)
             .flatMap(requestContext => Option(requestContext.getIdentity))
             .flatMap(identity => Option(identity.getSourceIp))
-            .fold(Applicative[F].pure(Vault.empty)) { sourceIp =>
+            .flatMap(sourceIp => Ipv4Address.fromString(sourceIp).orElse(Ipv6Address.fromString(sourceIp)))
+            .product(Port.fromInt(443))
+            .fold(Applicative[F].pure(Vault.empty)) { case (ipAddress, port) =>
               Sync[F]
-                .delay(new InetSocketAddress(sourceIp, 443))
+                .delay(SocketAddress(ipAddress, port))
                 .map { inetSocketAddress =>
                   Vault.empty.insert(
                     Request.Keys.ConnectionInfo,
@@ -70,8 +72,8 @@ object Transformers {
       bytes <- response.body.compile.toList
       body = new String(bytes.toArray)
 
-      headers = response.headers.iterator
-        .map(header => header.name.value -> header.value)
+      headers = response.headers.headers
+        .map(header => header.name.toString -> header.value)
         .toMap
         .asJava
 
