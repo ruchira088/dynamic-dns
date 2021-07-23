@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: dynamic-dns-api-ingress
   namespace: {{ namespace }}
+  annotations:
+    traefik.ingress.kubernetes.io/preserve-host: "true"
 spec:
   tls:
     - secretName: dynamic-dns-api-tls
