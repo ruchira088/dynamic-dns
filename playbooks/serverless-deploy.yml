@@ -7,7 +7,7 @@
       import_tasks: tasks/git-info.yml
 
     - name: Build serverless fat JAR
-      shell: cd ../ && sbt cleanAll serverless/assembly
+      shell: cd ../ && sbt clean serverless/assembly
 
     - name: Install npm dependencies
       command: npm --prefix serverless install
