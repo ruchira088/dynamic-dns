@@ -11,3 +11,5 @@ node_modules
 
 playbooks/k8s-output
 playbooks/docker-output
+
+docker.env
