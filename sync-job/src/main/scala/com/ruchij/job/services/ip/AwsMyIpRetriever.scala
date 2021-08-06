@@ -1,17 +1,18 @@
 package com.ruchij.job.services.ip
 
-import java.net.InetAddress
-
-import cats.effect.Sync
+import cats.effect.Concurrent
 import cats.implicits._
+import cats.{Applicative, Defer}
 import org.http4s.client.Client
 import org.http4s.implicits.http4sLiteralsSyntax
 
-class AwsMyIpRetriever[F[_]: Sync](client: Client[F]) extends MyIpRetriever[F] {
+import java.net.InetAddress
+
+class AwsMyIpRetriever[F[_]: Defer: Concurrent](client: Client[F]) extends MyIpRetriever[F] {
 
   override val ip: F[InetAddress] =
     client.expect[String](AwsMyIpRetriever.serverUrl)
-      .flatMap { response => Sync[F].delay(InetAddress.getByName(response.trim)) }
+      .flatMap { response => Defer[F].defer(Applicative[F].point(InetAddress.getByName(response.trim))) }
 
 }
 

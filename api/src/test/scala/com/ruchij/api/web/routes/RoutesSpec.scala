@@ -1,6 +1,7 @@
 package com.ruchij.api.web.routes
 
 import cats.effect.{Clock, IO}
+import cats.effect.unsafe.implicits.global
 import com.eed3si9n.ruchij.api.BuildInfo
 import com.ruchij.api.test.HttpTestApp
 import com.ruchij.api.test.matchers.{beJsonContentType, haveJson, haveStatus}
@@ -20,7 +21,7 @@ class RoutesSpec extends AnyFlatSpec with Matchers {
     val dateTime = DateTime.now()
     implicit val clock: Clock[IO] = stubClock[IO](dateTime)
 
-    val application = HttpTestApp[IO]()
+    val application = HttpTestApp[IO]
 
     val request = Request[IO](uri = uri"/health")
 

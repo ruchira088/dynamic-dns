@@ -5,6 +5,7 @@ import java.net.InetAddress
 import cats.{Applicative, ApplicativeError}
 import cats.implicits._
 import cats.effect.Concurrent
+import com.ruchij.core.types.FunctionKTypes.OutcomeOps
 import com.ruchij.job.exceptions.MyIpHostAddressMismatchException
 
 class ConsolidatedMyIpRetriever[F[_]: Concurrent](
@@ -17,7 +18,7 @@ class ConsolidatedMyIpRetriever[F[_]: Concurrent](
       apiFiber <- Concurrent[F].start(apiMyIpRetriever.ip)
 
       ipFromAws <- awsMyIpRetriever.ip
-      ipFromApi <- apiFiber.join
+      ipFromApi <- apiFiber.join.flatMap(_.toF)
 
       _ <-
         if (ipFromAws.getHostAddress != ipFromApi.getHostAddress)

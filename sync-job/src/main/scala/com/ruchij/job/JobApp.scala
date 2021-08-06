@@ -1,6 +1,7 @@
 package com.ruchij.job
 
-import cats.effect.{ConcurrentEffect, ExitCode, IO, IOApp}
+import cats.effect.kernel.Async
+import cats.effect.{Concurrent, ExitCode, IO, IOApp}
 import cats.implicits._
 import cats.{Applicative, Monad}
 import com.ruchij.core.config.BuildInformation
@@ -31,7 +32,7 @@ object JobApp extends IOApp {
 
     } yield ExitCode.Success
 
-  def application[F[_]: ConcurrentEffect](jobConfiguration: JobConfiguration): F[JobResult] =
+  def application[F[_]: Concurrent: Async](jobConfiguration: JobConfiguration): F[JobResult] =
     BlazeClientBuilder[F](ExecutionContext.global).resource.use { httpClient =>
       val hostnameResolver: LocalHostnameResolver[F] = new LocalHostnameResolver[F]
 

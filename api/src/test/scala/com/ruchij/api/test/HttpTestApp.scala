@@ -7,6 +7,6 @@ import com.ruchij.core.config.BuildInformation
 import org.http4s.HttpApp
 
 object HttpTestApp {
-  def apply[F[_]: Sync: Clock](): HttpApp[F] =
-    Routes(new HealthServiceImpl[F](BuildInformation(Some("my-branch"), Some("my-commit"), None)))
+  def apply[F[_]](implicit sync: Sync[F], clock: Clock[F]): HttpApp[F] =
+    Routes(new HealthServiceImpl[F](BuildInformation(Some("my-branch"), Some("my-commit"), None))(sync, clock, sync))
 }

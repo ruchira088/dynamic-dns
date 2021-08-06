@@ -23,7 +23,7 @@ class AwsRoute53Service[F[_]: Async](route53AsyncClient: Route53AsyncClient)(
 ) extends DnsManagementService[F] {
 
   val awsHostedZones: F[Seq[HostedZone]] =
-    Async[F].async[Seq[HostedZone]] { callback =>
+    Async[F].async_[Seq[HostedZone]] { callback =>
       route53AsyncClient
         .listHostedZones()
         .asScala
@@ -55,7 +55,7 @@ class AwsRoute53Service[F[_]: Async](route53AsyncClient: Route53AsyncClient)(
         .hostedZoneId(hostedZoneId)
         .build()
 
-    Async[F].async[DnsUpdated] { callback =>
+    Async[F].async_[DnsUpdated] { callback =>
       route53AsyncClient
         .changeResourceRecordSets(changeResourceRecordSetsRequest)
         .asScala

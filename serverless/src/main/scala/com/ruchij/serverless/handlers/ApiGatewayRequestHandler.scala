@@ -1,6 +1,7 @@
 package com.ruchij.serverless.handlers
 
-import cats.effect.{Clock, IO}
+import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 import com.amazonaws.services.lambda.runtime.events.{APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent}
 import com.amazonaws.services.lambda.runtime.{Context, RequestHandler}
 import com.ruchij.api.config.ServiceConfiguration
@@ -15,8 +16,6 @@ class ApiGatewayRequestHandler extends RequestHandler[APIGatewayProxyRequestEven
     apiGatewayProxyRequestEvent: APIGatewayProxyRequestEvent,
     context: Context
   ): APIGatewayProxyResponseEvent = {
-    implicit val clock: Clock[IO] = Clock.create[IO]
-
     val result =
       for {
         configObjectSource <- IO.delay(ConfigSource.defaultApplication)
