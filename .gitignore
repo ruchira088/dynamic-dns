@@ -13,3 +13,6 @@ playbooks/k8s-output
 playbooks/docker-output
 
 docker.env
+
+.terraform
+.terraform.lock.hcl
