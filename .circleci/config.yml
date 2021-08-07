@@ -30,6 +30,14 @@ alias:
     name: Install Serverless
     command: sudo npm install serverless -g
 
+  - &install-terraform
+    name: Install Terraform
+    command:
+      curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add - && \
+      sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main" && \
+      sudo apt install terraform -y
+
+
 jobs:
   build-and-test:
     docker:
@@ -80,6 +88,19 @@ jobs:
           name: Deploy Serverless application
           command: ansible-playbook playbooks/serverless-deploy.yml
 
+  create-terraform-resources:
+    docker:
+      - image: cimg/base:2021.07
+    steps:
+      - run: *install-terraform
+      - checkout
+      - run:
+          name: Initialize Terraform
+          command: terraform -chdir=./terraform init
+      - run:
+          name: Apply Terraform resources
+          command: terraform -chdir=./terraform apply -auto-approve
+
   deploy-to-k8s:
     docker:
       - image: cimg/base:stable
@@ -117,10 +138,18 @@ workflows:
           post-steps:
             - slack/status
 
+      - create-terraform-resources:
+          context: aws-credentials
+          requires:
+            - build-and-test
+          post-steps:
+            - slack/status
+
       - deploy-to-k8s:
           context: aws-credentials
           requires:
             - build-and-publish-docker-images
             - deploy-serverless-application
+            - create-terraform-resources
           post-steps:
             - slack/status
