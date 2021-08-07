@@ -32,10 +32,10 @@ alias:
 
   - &install-terraform
     name: Install Terraform
-    command:
-      curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - && \
-      apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main" && \
-      apt install terraform -y
+    command: |
+      curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add - && \
+      sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main" && \
+      sudo apt install terraform -y
 
 jobs:
   build-and-test:
@@ -89,7 +89,7 @@ jobs:
 
   create-terraform-resources:
     docker:
-      - image: cimg/base:2021.07
+      - image: cimg/base:stable
     steps:
       - run: *install-terraform
       - checkout
