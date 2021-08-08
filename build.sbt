@@ -60,6 +60,6 @@ lazy val syncJob =
       buildInfoPackage := "com.eed3si9n.ruchij.job",
       buildInfoKeys := Seq(name, organization, version, scalaVersion, sbtVersion),
       topLevelDirectory := None,
-      libraryDependencies ++= Seq(http4sBlazeClient, http4sCirce, circeGeneric, pureconfig, route53, logbackClassic)
+      libraryDependencies ++= Seq(http4sBlazeClient, http4sCirce, circeGeneric, pureconfig, route53, awsSns, logbackClassic)
     )
     .dependsOn(core)
