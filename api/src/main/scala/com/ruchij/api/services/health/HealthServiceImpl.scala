@@ -7,8 +7,8 @@ import com.ruchij.api.services.health.models.ServiceInformation
 import com.ruchij.core.config.BuildInformation
 import org.joda.time.DateTime
 
-class HealthServiceImpl[F[_]: Sync](buildInformation: BuildInformation) extends HealthService[F] {
+class HealthServiceImpl[F[_]: Sync](buildInformation: BuildInformation)(implicit clock: Clock[F]) extends HealthService[F] {
   override def serviceInformation(): F[ServiceInformation] =
-    Clock[F].realTime
+    clock.realTime
       .flatMap(duration => ServiceInformation.create[F](new DateTime(duration.toMillis), buildInformation))
 }

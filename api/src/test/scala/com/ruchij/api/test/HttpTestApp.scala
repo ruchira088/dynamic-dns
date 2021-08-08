@@ -8,5 +8,5 @@ import org.http4s.HttpApp
 
 object HttpTestApp {
   def apply[F[_]](implicit sync: Sync[F], clock: Clock[F]): HttpApp[F] =
-    Routes(new HealthServiceImpl[F](BuildInformation(Some("my-branch"), Some("my-commit"), None))(sync, clock, sync))
+    Routes(new HealthServiceImpl[F](BuildInformation(Some("my-branch"), Some("my-commit"), None))(sync, clock))
 }
