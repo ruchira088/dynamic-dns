@@ -22,6 +22,13 @@ resource "aws_iam_user_policy" "dynamic_dns_sync_job_iam_policy" {
           "route53:ListHostedZones"
         ],
         Resource = "*"
+      },
+      {
+        Effect = "Allow",
+        Action = [
+          "sns:Publish"
+        ],
+        Resource = "*"
       }
     ]
   })
