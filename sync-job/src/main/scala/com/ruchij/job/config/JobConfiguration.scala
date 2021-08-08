@@ -4,12 +4,13 @@ import cats.ApplicativeError
 import com.ruchij.core.config.BuildInformation
 import com.ruchij.core.config.ConfigReaders.dateTimeConfigReader
 import com.ruchij.core.types.FunctionKTypes
+import com.ruchij.job.config.JobConfigReaders.phoneNumberConfigReader
 import org.http4s.Uri
 import pureconfig.{ConfigObjectSource, ConfigReader}
 import pureconfig.error.{CannotConvert, ConfigReaderException, FailureReason}
 import pureconfig.generic.auto._
 
-case class JobConfiguration(dns: DnsConfiguration, apiServer: ApiServerConfiguration, buildInformation: BuildInformation)
+case class JobConfiguration(dns: DnsConfiguration, apiServer: ApiServerConfiguration, notification: NotificationConfig, buildInformation: BuildInformation)
 
 object JobConfiguration {
   implicit val uriConfigReader: ConfigReader[Uri] =

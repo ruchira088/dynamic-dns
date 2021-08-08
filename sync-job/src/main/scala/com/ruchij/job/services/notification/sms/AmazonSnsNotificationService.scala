@@ -1,6 +1,7 @@
 package com.ruchij.job.services.notification.sms
 
 import cats.effect.{Async, Sync}
+import cats.implicits._
 import software.amazon.awssdk.services.sns.SnsAsyncClient
 import software.amazon.awssdk.services.sns.model.{MessageAttributeValue, PublishRequest, PublishResponse}
 
@@ -29,4 +30,10 @@ class AmazonSnsNotificationService[F[_]: Async](snsAsyncClient: SnsAsyncClient) 
       }
     }
 
+}
+
+object AmazonSnsNotificationService {
+  def create[F[_]: Async]: F[AmazonSnsNotificationService[F]] =
+    Sync[F].delay(SnsAsyncClient.create())
+      .map { snsAsyncClient => new AmazonSnsNotificationService[F](snsAsyncClient) }
 }

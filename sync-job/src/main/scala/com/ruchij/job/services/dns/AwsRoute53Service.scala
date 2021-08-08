@@ -1,13 +1,13 @@
 package com.ruchij.job.services.dns
 
 import java.net.InetAddress
-
-import cats.effect.Async
+import cats.effect.{Async, Sync}
 import cats.implicits._
 import cats.{Applicative, ApplicativeError}
 import com.ruchij.job.exceptions.HostedZoneNotFoundForHostnameException
 import com.ruchij.job.models.JobResult.DnsUpdated
 import com.ruchij.job.services.dns.AwsRoute53Service.withName
+import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.route53.Route53AsyncClient
 import software.amazon.awssdk.services.route53.model._
 
@@ -86,6 +86,10 @@ class AwsRoute53Service[F[_]: Async](route53AsyncClient: Route53AsyncClient)(
 
 object AwsRoute53Service {
   val dnsTtl: FiniteDuration = 300 seconds
+
+  def create[F[_]: Async](implicit executionContext: ExecutionContext): F[AwsRoute53Service[F]] =
+    Sync[F].delay(Route53AsyncClient.builder().region(Region.AWS_GLOBAL).build())
+      .map { route53AsyncClient => new AwsRoute53Service[F](route53AsyncClient)}
 
   @tailrec
   def removeTrailingPeriods(input: String): String =

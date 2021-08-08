@@ -1,7 +1,7 @@
 package com.ruchij.api.services.health.models
 
+import cats.effect.kernel.Sync
 import cats.implicits.toFunctorOps
-import cats.{Applicative, Defer}
 import com.eed3si9n.ruchij.api.BuildInfo
 import com.ruchij.core.config.BuildInformation
 import org.joda.time.DateTime
@@ -22,8 +22,8 @@ case class ServiceInformation(
 )
 
 object ServiceInformation {
-  def create[F[_]: Defer: Applicative](timestamp: DateTime, buildInformation: BuildInformation): F[ServiceInformation] =
-    Defer[F].defer(Applicative[F].point(Properties.javaVersion))
+  def create[F[_]: Sync](timestamp: DateTime, buildInformation: BuildInformation): F[ServiceInformation] =
+    Sync[F].delay(Properties.javaVersion)
       .map { javaVersion =>
         ServiceInformation(
           BuildInfo.name,

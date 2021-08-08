@@ -5,15 +5,14 @@ import cats.effect.{Concurrent, ExitCode, IO, IOApp}
 import cats.implicits._
 import cats.{Applicative, Monad}
 import com.ruchij.core.config.BuildInformation
-import com.ruchij.job.config.{DnsConfiguration, JobConfiguration}
+import com.ruchij.job.config.{DnsConfiguration, JobConfiguration, NotificationConfig}
 import com.ruchij.job.models.JobResult
 import com.ruchij.job.services.dns.{AwsRoute53Service, DnsManagementService}
 import com.ruchij.job.services.hostname.{HostnameResolver, LocalHostnameResolver}
 import com.ruchij.job.services.ip.{ApiMyIpRetriever, AwsMyIpRetriever, ConsolidatedMyIpRetriever, MyIpRetriever}
+import com.ruchij.job.services.notification.sms.{AmazonSnsNotificationService, SmsNotificationService}
 import org.http4s.blaze.client.BlazeClientBuilder
 import pureconfig.ConfigSource
-import software.amazon.awssdk.regions.Region
-import software.amazon.awssdk.services.route53.Route53AsyncClient
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -40,25 +39,35 @@ object JobApp extends IOApp {
       val awsMyIpRetriever: AwsMyIpRetriever[F] = new AwsMyIpRetriever[F](httpClient)
       val myIpRetriever: ConsolidatedMyIpRetriever[F] = new ConsolidatedMyIpRetriever[F](apiMyIpRetriever, awsMyIpRetriever)
 
-      val route53AsyncClient: Route53AsyncClient = Route53AsyncClient.builder().region(Region.AWS_GLOBAL).build()
-      val dnsManagementService = new AwsRoute53Service[F](route53AsyncClient)
-
-      execute[F](hostnameResolver, myIpRetriever, dnsManagementService, jobConfiguration.dns)
+      for {
+        dnsManagementService <- AwsRoute53Service.create[F]
+        smsNotificationService <- AmazonSnsNotificationService.create[F]
+        result <- execute[F](hostnameResolver, myIpRetriever, dnsManagementService, smsNotificationService, jobConfiguration.dns, jobConfiguration.notification)
+      }
+      yield result
     }
 
   def execute[F[_]: Monad](
     hostnameResolver: HostnameResolver[F],
     myIpRetriever: MyIpRetriever[F],
     dnsManagementService: DnsManagementService[F],
-    dnsConfiguration: DnsConfiguration
+    smsNotificationService: SmsNotificationService[F],
+    dnsConfiguration: DnsConfiguration,
+    notificationConfig: NotificationConfig
   ): F[JobResult] =
     for {
       myIp <- myIpRetriever.ip
       dnsHostIp <- hostnameResolver.ipAddress(dnsConfiguration.host)
 
-      result <- if (dnsHostIp.forall(_.getHostAddress != myIp.getHostAddress)) {
+      result <- if (dnsHostIp.forall(_.getHostAddress != myIp.getHostAddress))
         dnsManagementService.upsert(dnsConfiguration.host, myIp)
-      } else Applicative[F].pure(JobResult.NoChange(dnsConfiguration.host, myIp))
+          .productL {
+            notificationConfig.alertSmsPhoneNumber.fold(Applicative[F].unit) { phoneNumber =>
+              smsNotificationService.send(phoneNumber, s"${dnsConfiguration.host} has been updated to ${myIp.getHostAddress}")
+                .productR(Applicative[F].unit)
+            }
+          }
+      else Applicative[F].pure(JobResult.NoChange(dnsConfiguration.host, myIp))
 
     } yield result
 

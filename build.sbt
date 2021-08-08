@@ -43,7 +43,7 @@ lazy val serverless =
       name := "dynamic-dns-serverless-api",
       version := "0.0.1",
       assembly / assemblyJarName := s"${name.value}-${version.value}.jar",
-      assembly / assemblyMergeStrategy  := {
+      assembly / assemblyMergeStrategy := {
         case PathList("META-INF", _*) => MergeStrategy.discard
         case _ => MergeStrategy.first
       },
@@ -60,6 +60,15 @@ lazy val syncJob =
       buildInfoPackage := "com.eed3si9n.ruchij.job",
       buildInfoKeys := Seq(name, organization, version, scalaVersion, sbtVersion),
       topLevelDirectory := None,
-      libraryDependencies ++= Seq(http4sBlazeClient, http4sCirce, circeGeneric, pureconfig, route53, awsSns, logbackClassic)
+      libraryDependencies ++= Seq(
+        http4sBlazeClient,
+        http4sCirce,
+        circeGeneric,
+        pureconfig,
+        route53,
+        awsSns,
+        phoneNumber,
+        logbackClassic
+      )
     )
     .dependsOn(core)

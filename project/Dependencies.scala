@@ -33,6 +33,8 @@ object Dependencies
 
   lazy val awsSns = "software.amazon.awssdk" % "sns" % AwsSdkVersion
 
+  lazy val phoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.12.29"
+
   lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.5"
 
   lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.13.0" cross CrossVersion.full
