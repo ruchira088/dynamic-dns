@@ -14,7 +14,6 @@ import com.ruchij.job.services.notification.sms.{AmazonSnsNotificationService, S
 import org.http4s.blaze.client.BlazeClientBuilder
 import pureconfig.ConfigSource
 
-import scala.concurrent.ExecutionContext
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object JobApp extends IOApp {
@@ -32,7 +31,7 @@ object JobApp extends IOApp {
     } yield ExitCode.Success
 
   def application[F[_]: Concurrent: Async](jobConfiguration: JobConfiguration): F[JobResult] =
-    BlazeClientBuilder[F](ExecutionContext.global).resource.use { httpClient =>
+    BlazeClientBuilder[F].resource.use { httpClient =>
       val hostnameResolver: LocalHostnameResolver[F] = new LocalHostnameResolver[F]
 
       val apiMyIpRetriever: ApiMyIpRetriever[F] = new ApiMyIpRetriever[F](httpClient, jobConfiguration.apiServer)

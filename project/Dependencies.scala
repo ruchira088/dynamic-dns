@@ -2,10 +2,10 @@ import sbt._
 
 object Dependencies
 {
-  val ScalaVersion = "2.13.6"
-  val Http4sVersion = "0.23.1"
+  val ScalaVersion = "2.13.8"
+  val Http4sVersion = "0.23.10"
   val CirceVersion = "0.14.1"
-  val AwsSdkVersion = "2.17.28"
+  val AwsSdkVersion = "2.17.134"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
 
@@ -21,29 +21,27 @@ object Dependencies
 
   lazy val circeLiteral = "io.circe" %% "circe-literal" % CirceVersion
 
-  lazy val jodaTime = "joda-time" % "joda-time" % "2.10.10"
+  lazy val jodaTime = "joda-time" % "joda-time" % "2.10.13"
 
-  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.16.0"
+  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.17.1"
 
   lazy val route53 = "software.amazon.awssdk" % "route53" % AwsSdkVersion
 
   lazy val awsLambdaJavaCore = "com.amazonaws" % "aws-lambda-java-core" % "1.2.1"
 
-  lazy val awsLambdaJavaEvents = "com.amazonaws" % "aws-lambda-java-events" % "3.10.0"
+  lazy val awsLambdaJavaEvents = "com.amazonaws" % "aws-lambda-java-events" % "3.11.0"
 
   lazy val awsSns = "software.amazon.awssdk" % "sns" % AwsSdkVersion
 
-  lazy val phoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.12.31"
+  lazy val phoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.12.43"
 
-  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.5"
+  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.10"
 
-  lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.13.1" cross CrossVersion.full
-
-  lazy val scalaTypedHoles = "com.github.cb372" % "scala-typed-holes" % "0.1.9" cross CrossVersion.full
+  lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.13.2" cross CrossVersion.full
 
   lazy val betterMonadicFor = "com.olegpy" %% "better-monadic-for" % "0.3.1"
 
-  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.9"
+  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.11"
 
   lazy val pegdown = "org.pegdown" % "pegdown" % "1.6.0"
 }
