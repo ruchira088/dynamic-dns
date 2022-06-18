@@ -40,7 +40,7 @@ alias:
 jobs:
   build-and-test:
     docker:
-      - image: cimg/openjdk:11.0
+      - image: cimg/openjdk:17.0
     steps:
       - run: *install-sbt
       - checkout
@@ -62,7 +62,7 @@ jobs:
 
   build-and-publish-docker-images:
     docker:
-      - image: cimg/openjdk:11.0
+      - image: cimg/openjdk:17.0
     steps:
       - setup_remote_docker
       - run: *install-sbt
@@ -75,7 +75,7 @@ jobs:
 
   deploy-serverless-application:
     docker:
-      - image: cimg/openjdk:11.0-node
+      - image: cimg/openjdk:17.0-node
     steps:
       - setup_remote_docker
       - run: *install-sbt
