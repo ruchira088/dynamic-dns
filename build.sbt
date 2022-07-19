@@ -24,7 +24,7 @@ lazy val api =
       topLevelDirectory := None,
       libraryDependencies ++= Seq(
         http4sDsl,
-        http4sBlazeServer,
+        http4sEmberServer,
         http4sCirce,
         circeGeneric,
         circeParser,
@@ -60,7 +60,7 @@ lazy val syncJob =
       buildInfoKeys := Seq(name, organization, version, scalaVersion, sbtVersion),
       topLevelDirectory := None,
       libraryDependencies ++= Seq(
-        http4sBlazeClient,
+        http4sEmberClient,
         http4sCirce,
         circeGeneric,
         pureconfig,

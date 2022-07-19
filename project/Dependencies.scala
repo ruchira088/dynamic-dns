@@ -3,15 +3,15 @@ import sbt._
 object Dependencies
 {
   val ScalaVersion = "2.13.8"
-  val Http4sVersion = "0.23.12"
+  val Http4sVersion = "0.23.13"
   val CirceVersion = "0.14.2"
-  val AwsSdkVersion = "2.17.224"
+  val AwsSdkVersion = "2.17.234"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
 
-  lazy val http4sBlazeServer = "org.http4s" %% "http4s-blaze-server" % Http4sVersion
+  lazy val http4sEmberServer = "org.http4s" %% "http4s-ember-server" % Http4sVersion
 
-  lazy val http4sBlazeClient = "org.http4s" %% "http4s-blaze-client" % Http4sVersion
+  lazy val http4sEmberClient = "org.http4s" %% "http4s-ember-client" % Http4sVersion
 
   lazy val http4sCirce = "org.http4s" %% "http4s-circe" % Http4sVersion
 
@@ -33,7 +33,7 @@ object Dependencies
 
   lazy val awsSns = "software.amazon.awssdk" % "sns" % AwsSdkVersion
 
-  lazy val phoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.12.51"
+  lazy val phoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.12.52"
 
   lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.11"
 

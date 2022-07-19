@@ -11,7 +11,7 @@ import com.ruchij.job.services.dns.{AwsRoute53Service, DnsManagementService}
 import com.ruchij.job.services.hostname.{HostnameResolver, LocalHostnameResolver}
 import com.ruchij.job.services.ip.{ApiMyIpRetriever, AwsMyIpRetriever, ConsolidatedMyIpRetriever, MyIpRetriever}
 import com.ruchij.job.services.notification.sms.{AmazonSnsNotificationService, SmsNotificationService}
-import org.http4s.blaze.client.BlazeClientBuilder
+import org.http4s.ember.client.EmberClientBuilder
 import pureconfig.ConfigSource
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -31,7 +31,7 @@ object JobApp extends IOApp {
     } yield ExitCode.Success
 
   def application[F[_]: Concurrent: Async](jobConfiguration: JobConfiguration): F[JobResult] =
-    BlazeClientBuilder[F].resource.use { httpClient =>
+    EmberClientBuilder.default[F].build.use { httpClient =>
       val hostnameResolver: LocalHostnameResolver[F] = new LocalHostnameResolver[F]
 
       val apiMyIpRetriever: ApiMyIpRetriever[F] = new ApiMyIpRetriever[F](httpClient, jobConfiguration.apiServer)
