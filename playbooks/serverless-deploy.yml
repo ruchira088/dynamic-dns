@@ -12,7 +12,7 @@
     - name: Install npm dependencies
       command: npm --prefix serverless install
 
-    - name: Initialize Serverless applcation
+    - name: Initialize Serverless application
       shell: |
         cd serverless &&
           serverless create_domain -v \

@@ -8,9 +8,11 @@
       vars:
         app_name: api
         sbt_project: api
+        publish: false
 
     - name: Build Dynamic DNS sync job
       import_tasks: tasks/build-docker-prod.yml
       vars:
         app_name: sync-job
         sbt_project: syncJob
+        publish: false
