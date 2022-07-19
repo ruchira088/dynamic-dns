@@ -3,6 +3,9 @@
   connection: local
 
   tasks:
+    - name: Install dependencies
+      import_tasks: tasks/install-dependencies.yml
+
     - block:
       - name: Delete existing output directory
         file:
@@ -41,6 +44,8 @@
           template:
             src: k8s/DockerRegistryCredentials.yaml
             dest: k8s-output/DockerRegistryCredentials.yaml
+          vars:
+            ghcr_credentials: "{{ lookup('aws_ssm', '/github/ghcr/docker-config', region='ap-southeast-2') }}"
 
         - name: Render API K8s resource files
           import_tasks: tasks/k8s-resource-files.yml
