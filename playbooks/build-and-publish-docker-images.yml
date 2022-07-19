@@ -6,15 +6,15 @@
     - name: Install dependencies
       import_tasks: tasks/install-dependencies.yml
 
-    - name: Build Dynamic DNS API
-      import_tasks: tasks/build-docker-prod.yml
+    - name: Build and publish Dynamic DNS API Docker image
+      import_tasks: tasks/build-and-publish-docker-image.yml
       vars:
         app_name: api
         sbt_project: api
         publish: true
 
-    - name: Build Dynamic DNS sync job
-      import_tasks: tasks/build-docker-prod.yml
+    - name: Build and publish Dynamic DNS sync job Docker image
+      import_tasks: tasks/build-and-publish-docker-image.yml
       vars:
         app_name: sync-job
         sbt_project: syncJob
