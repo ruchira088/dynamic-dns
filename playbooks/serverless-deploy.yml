@@ -15,7 +15,7 @@
     - name: Initialize Serverless application
       shell: |
         cd serverless &&
-          serverless create_domain -v \
+          node_modules/.bin/serverless create_domain -v \
             --git_branch {{ git_branch }} \
             --git_commit {{ git_commit }} \
             --build_timestamp {{ ansible_date_time.iso8601 }}
@@ -23,7 +23,7 @@
     - name: Deploy Serverless application
       shell: |
         cd serverless &&
-          serverless deploy -v \
+          node_modules/.bin/serverless deploy -v \
             --git_branch {{ git_branch }} \
             --git_commit {{ git_commit }} \
             --build_timestamp {{ ansible_date_time.iso8601 }}
