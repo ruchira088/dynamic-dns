@@ -66,27 +66,27 @@
       block:
         - name: Create Namespaces
           block:
-            - name: Create Namespace in API server
-              command: kubectl apply -f k8s-output/Namespace.yaml --kubeconfig k8s-output/api-server-kubeconfig
+#            - name: Create Namespace in API server
+#              command: kubectl apply -f k8s-output/Namespace.yaml --kubeconfig k8s-output/api-server-kubeconfig
 
             - name: Create Namespace in Sync job
               command: kubectl apply -f k8s-output/Namespace.yaml --kubeconfig k8s-output/sync-job-kubeconfig
 
         - name: Create Docker registry credentials
           block:
-            - name: Create Docker registry credentials in API server
-              command: kubectl apply -f k8s-output/DockerRegistryCredentials.yaml --kubeconfig k8s-output/api-server-kubeconfig
+#            - name: Create Docker registry credentials in API server
+#              command: kubectl apply -f k8s-output/DockerRegistryCredentials.yaml --kubeconfig k8s-output/api-server-kubeconfig
 
             - name: Create Docker registry credentials in Sync job
               command: kubectl apply -f k8s-output/DockerRegistryCredentials.yaml --kubeconfig k8s-output/sync-job-kubeconfig
 
-        - name: Deploy API
-          block:
-            - name: Deploy application
-              command: kubectl apply -f k8s-output/api --kubeconfig k8s-output/api-server-kubeconfig
-
-            - name: Wait for successful deployment
-              command: kubectl rollout status deployment dynamic-dns-api-deployment --kubeconfig k8s-output/api-server-kubeconfig -n {{ namespace }}
+#        - name: Deploy API
+#          block:
+#            - name: Deploy application
+#              command: kubectl apply -f k8s-output/api --kubeconfig k8s-output/api-server-kubeconfig
+#
+#            - name: Wait for successful deployment
+#              command: kubectl rollout status deployment dynamic-dns-api-deployment --kubeconfig k8s-output/api-server-kubeconfig -n {{ namespace }}
 
         - name: Deploy sync job
           block:
