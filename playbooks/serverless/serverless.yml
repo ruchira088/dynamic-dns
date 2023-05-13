@@ -6,7 +6,7 @@ plugins:
 provider:
   name: aws
   region: ap-southeast-2
-  runtime: java11
+  runtime: java17
   stage: ${opt:stage, "development"}
   timeout: 30
   environment:
