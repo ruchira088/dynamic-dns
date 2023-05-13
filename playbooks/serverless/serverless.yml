@@ -7,12 +7,12 @@ provider:
   name: aws
   region: ap-southeast-2
   runtime: java17
-  stage: ${opt:stage, "development"}
+  stage: development
   timeout: 30
   environment:
-    GIT_COMMIT: ${opt:git_commit}
-    GIT_BRANCH: ${opt:git_branch}
-    BUILD_TIMESTAMP: ${opt:build_timestamp}
+    GIT_COMMIT: ${param:git_commit}
+    GIT_BRANCH: ${param:git_branch}
+    BUILD_TIMESTAMP: ${param:build_timestamp}
 
 custom:
   customDomain:
@@ -28,6 +28,7 @@ package:
 functions:
   healthCheck:
     handler: com.ruchij.serverless.handlers.ApiGatewayRequestHandler
+    description: Health check endpoint
     events:
       - http:
           method: get
@@ -35,6 +36,7 @@ functions:
 
   ipAddress:
     handler: com.ruchij.serverless.handlers.ApiGatewayRequestHandler
+    description: Responds with the IP address of the request
     events:
       - http:
           method: get
