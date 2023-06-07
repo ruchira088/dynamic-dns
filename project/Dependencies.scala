@@ -3,9 +3,9 @@ import sbt._
 object Dependencies
 {
   val ScalaVersion = "2.13.11"
-  val Http4sVersion = "0.23.18"
+  val Http4sVersion = "0.23.19"
   val CirceVersion = "0.14.5"
-  val AwsSdkVersion = "2.20.61"
+  val AwsSdkVersion = "2.20.80"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
 
@@ -23,17 +23,17 @@ object Dependencies
 
   lazy val jodaTime = "joda-time" % "joda-time" % "2.12.5"
 
-  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.17.3"
+  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.17.4"
 
   lazy val route53 = "software.amazon.awssdk" % "route53" % AwsSdkVersion
 
   lazy val awsLambdaJavaCore = "com.amazonaws" % "aws-lambda-java-core" % "1.2.2"
 
-  lazy val awsLambdaJavaEvents = "com.amazonaws" % "aws-lambda-java-events" % "3.11.1"
+  lazy val awsLambdaJavaEvents = "com.amazonaws" % "aws-lambda-java-events" % "3.11.2"
 
   lazy val awsSns = "software.amazon.awssdk" % "sns" % AwsSdkVersion
 
-  lazy val phoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.13.11"
+  lazy val phoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.13.13"
 
   lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.4.7"
 
@@ -41,7 +41,7 @@ object Dependencies
 
   lazy val betterMonadicFor = "com.olegpy" %% "better-monadic-for" % "0.3.1"
 
-  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.15"
+  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.16"
 
   lazy val pegdown = "org.pegdown" % "pegdown" % "1.6.0"
 }
