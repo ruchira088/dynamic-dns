@@ -11,6 +11,7 @@ import com.ruchij.job.services.dns.{AwsRoute53Service, DnsManagementService}
 import com.ruchij.job.services.hostname.{HostnameResolver, LocalHostnameResolver}
 import com.ruchij.job.services.ip.{ApiMyIpRetriever, AwsMyIpRetriever, ConsolidatedMyIpRetriever, MyIpRetriever}
 import com.ruchij.job.services.notification.sms.{AmazonSnsNotificationService, SmsNotificationService}
+import fs2.io.net.Network
 import org.http4s.ember.client.EmberClientBuilder
 import pureconfig.ConfigSource
 
@@ -30,7 +31,7 @@ object JobApp extends IOApp {
 
     } yield ExitCode.Success
 
-  def application[F[_]: Concurrent: Async](jobConfiguration: JobConfiguration): F[JobResult] =
+  def application[F[_]: Concurrent: Async: Network](jobConfiguration: JobConfiguration): F[JobResult] =
     EmberClientBuilder.default[F].build.use { httpClient =>
       val hostnameResolver: LocalHostnameResolver[F] = new LocalHostnameResolver[F]
 
