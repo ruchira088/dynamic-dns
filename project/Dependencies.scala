@@ -5,7 +5,7 @@ object Dependencies
   val ScalaVersion = "2.13.11"
   val Http4sVersion = "0.23.23"
   val CirceVersion = "0.14.5"
-  val AwsSdkVersion = "2.20.120"
+  val AwsSdkVersion = "2.20.130"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
 
@@ -27,15 +27,15 @@ object Dependencies
 
   lazy val route53 = "software.amazon.awssdk" % "route53" % AwsSdkVersion
 
-  lazy val awsLambdaJavaCore = "com.amazonaws" % "aws-lambda-java-core" % "1.2.2"
+  lazy val awsLambdaJavaCore = "com.amazonaws" % "aws-lambda-java-core" % "1.2.3"
 
   lazy val awsLambdaJavaEvents = "com.amazonaws" % "aws-lambda-java-events" % "3.11.2"
 
   lazy val awsSns = "software.amazon.awssdk" % "sns" % AwsSdkVersion
 
-  lazy val phoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.13.18"
+  lazy val phoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.13.19"
 
-  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.4.9"
+  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.4.11"
 
   lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.13.2" cross CrossVersion.full
 
