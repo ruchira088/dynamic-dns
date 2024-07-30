@@ -4,8 +4,8 @@ object Dependencies
 {
   val ScalaVersion = "2.13.14"
   val Http4sVersion = "0.23.27"
-  val CirceVersion = "0.14.7"
-  val AwsSdkVersion = "2.26.1"
+  val CirceVersion = "0.14.9"
+  val AwsSdkVersion = "2.26.26"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
 
@@ -29,11 +29,11 @@ object Dependencies
 
   lazy val awsLambdaJavaCore = "com.amazonaws" % "aws-lambda-java-core" % "1.2.3"
 
-  lazy val awsLambdaJavaEvents = "com.amazonaws" % "aws-lambda-java-events" % "3.11.6"
+  lazy val awsLambdaJavaEvents = "com.amazonaws" % "aws-lambda-java-events" % "3.13.0"
 
   lazy val awsSns = "software.amazon.awssdk" % "sns" % AwsSdkVersion
 
-  lazy val phoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.13.39"
+  lazy val phoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.13.42"
 
   lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.5.6"
 
@@ -41,7 +41,7 @@ object Dependencies
 
   lazy val betterMonadicFor = "com.olegpy" %% "better-monadic-for" % "0.3.1"
 
-  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.18"
+  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.19"
 
   lazy val pegdown = "org.pegdown" % "pegdown" % "1.6.0"
 }
