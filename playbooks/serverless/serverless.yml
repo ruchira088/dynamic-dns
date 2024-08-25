@@ -17,7 +17,7 @@ provider:
 custom:
   customDomain:
     domainName: ip.ruchij.com
-    certificateArn: arn:aws:acm:ap-southeast-2:365562660444:certificate/ca2ecc8d-0564-4c7a-a8c0-37509b690206
+    certificateArn: !Sub arn:aws:acm:${AWS::Region}:${AWS::AccountId}:certificate/ca2ecc8d-0564-4c7a-a8c0-37509b690206
     endpointType: regional
     createRoute53Record: true
     stage: ${self:provider.stage}
@@ -30,7 +30,7 @@ functions:
     handler: com.ruchij.serverless.handlers.ApiGatewayRequestHandler
     description: Health check endpoint
     events:
-      - http:
+      - httpApi:
           method: get
           path: /health
 
@@ -38,7 +38,7 @@ functions:
     handler: com.ruchij.serverless.handlers.ApiGatewayRequestHandler
     description: Responds with the IP address of the request
     events:
-      - http:
+      - httpApi:
           method: get
           path: /
 
