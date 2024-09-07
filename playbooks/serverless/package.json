@@ -1,9 +1,9 @@
 {
   "name": "serverless-deployment",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Deploy API to AWS Lambda",
   "devDependencies": {
-    "serverless": "^3.21.0",
-    "serverless-domain-manager": "^7.3.8"
+    "serverless": "^4.2.5",
+    "serverless-domain-manager": "^7.4.0"
   }
 }

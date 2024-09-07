@@ -1,4 +1,5 @@
 service: dynamic-dns-serverless-api
+frameworkVersion: "4"
 
 plugins:
   - serverless-domain-manager
@@ -17,9 +18,11 @@ provider:
 custom:
   customDomain:
     domainName: ip.ruchij.com
-    certificateArn: !Sub arn:aws:acm:${AWS::Region}:${AWS::AccountId}:certificate/ca2ecc8d-0564-4c7a-a8c0-37509b690206
-    endpointType: regional
+    certificateName: ip.ruchij.com
     createRoute53Record: true
+    createRoute53IPv6Record: true
+    endpointType: REGIONAL
+    autoDomain: true
     stage: ${self:provider.stage}
 
 package:

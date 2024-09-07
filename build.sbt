@@ -1,4 +1,5 @@
 import Dependencies._
+import sbtrelease.ReleaseStateTransformations._
 
 inThisBuild {
   Seq(
@@ -18,7 +19,6 @@ lazy val api =
     .enablePlugins(BuildInfoPlugin, JavaAppPackaging)
     .settings(
       name := "dynamic-dns-api",
-      version := "0.0.1",
       buildInfoPackage := "com.eed3si9n.ruchij.api",
       buildInfoKeys := Seq(name, organization, version, scalaVersion, sbtVersion),
       topLevelDirectory := None,
@@ -40,7 +40,6 @@ lazy val serverless =
   (project in file("./serverless"))
     .settings(
       name := "dynamic-dns-serverless-api",
-      version := "0.0.1",
       assembly / assemblyJarName := s"${name.value}-${version.value}.jar",
       assembly / assemblyMergeStrategy := {
         case PathList("META-INF", _*) => MergeStrategy.discard
@@ -55,7 +54,6 @@ lazy val syncJob =
     .enablePlugins(BuildInfoPlugin, JavaAppPackaging)
     .settings(
       name := "dynamic-dns-sync-job",
-      version := "0.0.1",
       buildInfoPackage := "com.eed3si9n.ruchij.job",
       buildInfoKeys := Seq(name, organization, version, scalaVersion, sbtVersion),
       topLevelDirectory := None,
@@ -71,3 +69,15 @@ lazy val syncJob =
       )
     )
     .dependsOn(core)
+
+releaseProcess := Seq(
+  checkSnapshotDependencies,
+  inquireVersions,
+  runClean,
+  setReleaseVersion,
+  commitReleaseVersion,
+  tagRelease,
+  setNextVersion,
+  commitNextVersion,
+  pushChanges
+)
