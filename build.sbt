@@ -40,7 +40,7 @@ lazy val serverless =
   (project in file("./serverless"))
     .settings(
       name := "dynamic-dns-serverless-api",
-      assembly / assemblyJarName := s"${name.value}-${version.value}.jar",
+      assembly / assemblyJarName := s"${name.value}.jar",
       assembly / assemblyMergeStrategy := {
         case PathList("META-INF", _*) => MergeStrategy.discard
         case _ => MergeStrategy.first

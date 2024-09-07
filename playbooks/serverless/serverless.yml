@@ -26,7 +26,7 @@ custom:
     stage: ${self:provider.stage}
 
 package:
-  artifact: ../../serverless/target/scala-2.13/dynamic-dns-serverless-api-0.0.1.jar
+  artifact: ../../serverless/target/scala-2.13/dynamic-dns-serverless-api.jar
 
 functions:
   healthCheck:
