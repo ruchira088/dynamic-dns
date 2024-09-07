@@ -10,15 +10,7 @@
       shell: cd ../ && sbt clean serverless/assembly
 
     - name: Install npm dependencies
-      command: npm --prefix serverless install
-
-    - name: Initialize Serverless application
-      shell: |
-        cd serverless &&
-          SLS_DEBUG=* node_modules/.bin/serverless create_domain \
-            --param="git_branch={{ git_branch }}" \
-            --param="git_commit={{ git_commit }}" \
-            --param="build_timestamp={{ ansible_date_time.iso8601 }}"
+      command: npm --prefix serverless ci
 
     - name: Deploy Serverless application
       shell: |
