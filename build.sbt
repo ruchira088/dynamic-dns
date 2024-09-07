@@ -77,7 +77,7 @@ releaseProcess := Seq(
   setReleaseVersion,
   commitReleaseVersion,
   tagRelease,
+  pushChanges,
   setNextVersion,
-  commitNextVersion,
-  pushChanges
+  commitNextVersion
 )
