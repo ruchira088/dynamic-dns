@@ -11,11 +11,11 @@ import java.net.InetAddress
 class AwsMyIpRetriever[F[_]: Async](client: Client[F]) extends MyIpRetriever[F] {
 
   override val ip: F[InetAddress] =
-    client.expect[String](AwsMyIpRetriever.serverUrl)
+    client.expect[String](AwsMyIpRetriever.ServerUrl)
       .flatMap { response => Sync[F].delay(InetAddress.getByName(response.trim)) }
 
 }
 
 object AwsMyIpRetriever {
-  val serverUrl = uri"https://checkip.amazonaws.com"
+  private val ServerUrl = uri"https://checkip.amazonaws.com"
 }

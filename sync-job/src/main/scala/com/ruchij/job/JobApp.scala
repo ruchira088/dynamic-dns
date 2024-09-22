@@ -35,9 +35,11 @@ object JobApp extends IOApp {
     EmberClientBuilder.default[F].build.use { httpClient =>
       val hostnameResolver: LocalHostnameResolver[F] = new LocalHostnameResolver[F]
 
-      val apiMyIpRetriever: ApiMyIpRetriever[F] = new ApiMyIpRetriever[F](httpClient, jobConfiguration.apiServer)
+      val serverlessMyIpRetriever: ApiMyIpRetriever[F] = new ApiMyIpRetriever[F](httpClient, jobConfiguration.apiServer.url)
+      val cloudflareMyIpRetriever: ApiMyIpRetriever[F] = new ApiMyIpRetriever[F](httpClient, jobConfiguration.cloudflareApi.url)
       val awsMyIpRetriever: AwsMyIpRetriever[F] = new AwsMyIpRetriever[F](httpClient)
-      val myIpRetriever: ConsolidatedMyIpRetriever[F] = new ConsolidatedMyIpRetriever[F](apiMyIpRetriever, awsMyIpRetriever)
+      val myIpRetriever: ConsolidatedMyIpRetriever[F] =
+        ConsolidatedMyIpRetriever[F](serverlessMyIpRetriever, cloudflareMyIpRetriever, awsMyIpRetriever)
 
       for {
         dnsManagementService <- AwsRoute53Service.create[F]

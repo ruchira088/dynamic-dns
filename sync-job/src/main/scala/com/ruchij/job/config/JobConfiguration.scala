@@ -10,7 +10,13 @@ import pureconfig.{ConfigObjectSource, ConfigReader}
 import pureconfig.error.{CannotConvert, ConfigReaderException, FailureReason}
 import pureconfig.generic.auto._
 
-case class JobConfiguration(dns: DnsConfiguration, apiServer: ApiServerConfiguration, notification: NotificationConfig, buildInformation: BuildInformation)
+case class JobConfiguration(
+  dns: DnsConfiguration,
+  apiServer: ApiServerConfiguration,
+  cloudflareApi: CloudflareApiConfiguration,
+  notification: NotificationConfig,
+  buildInformation: BuildInformation
+)
 
 object JobConfiguration {
   implicit val uriConfigReader: ConfigReader[Uri] =
