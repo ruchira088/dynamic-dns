@@ -5,7 +5,7 @@ object Dependencies
   val ScalaVersion = "2.13.15"
   val Http4sVersion = "0.23.30"
   val CirceVersion = "0.14.10"
-  val AwsSdkVersion = "2.29.39"
+  val AwsSdkVersion = "2.29.40"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
 
@@ -35,7 +35,7 @@ object Dependencies
 
   lazy val phoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.13.52"
 
-  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.5.14"
+  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.5.15"
 
   lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.13.3" cross CrossVersion.full
 
