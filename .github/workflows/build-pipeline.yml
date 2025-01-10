@@ -114,6 +114,11 @@ jobs:
           role-session-name: backend-deploy
           role-to-assume: "arn:aws:iam::365562660444:role/github_iam_role"
 
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "4.67.0"
+
       - name: Initialize Terraform
         run: terraform -chdir=./terraform init
 

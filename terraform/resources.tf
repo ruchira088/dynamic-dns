@@ -42,12 +42,10 @@ resource "aws_ssm_parameter" "dynamic_dns_sync_job_access_key_id" {
   name = "/dynamic-dns/sync-job/aws-access-key-id"
   type = "SecureString"
   value = aws_iam_access_key.dynamic_dns_sync_job_access_key.id
-  overwrite = true
 }
 
 resource "aws_ssm_parameter" "dynamic_dns_sync_job_secret_access_key" {
   name = "/dynamic-dns/sync-job/aws-secret-access-key"
   type = "SecureString"
   value = aws_iam_access_key.dynamic_dns_sync_job_access_key.secret
-  overwrite = true
 }
