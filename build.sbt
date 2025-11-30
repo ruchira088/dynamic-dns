@@ -61,6 +61,7 @@ lazy val syncJob =
       name := "dynamic-dns-sync-job",
       buildInfoPackage := "com.eed3si9n.ruchij.job",
       buildInfoKeys := Seq(name, organization, version, scalaVersion, sbtVersion, buildTimestamp, gitBranch, gitCommit),
+      Universal / javaOptions ++= Seq("-Dlogback.configurationFile=/opt/data/logback.xml"),
       topLevelDirectory := None,
       libraryDependencies ++= Seq(
         http4sEmberClient,
@@ -70,7 +71,8 @@ lazy val syncJob =
         route53,
         awsSns,
         phoneNumber,
-        logbackClassic
+        logbackClassic,
+        logstashLogbackEncoder
       )
     )
     .dependsOn(core)

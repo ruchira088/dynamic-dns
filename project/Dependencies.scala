@@ -1,4 +1,4 @@
-import sbt._
+import sbt.*
 
 object Dependencies
 {
@@ -36,6 +36,8 @@ object Dependencies
   lazy val phoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.19"
 
   lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.5.21"
+
+  lazy val logstashLogbackEncoder = "net.logstash.logback" % "logstash-logback-encoder" % "9.0"
 
   lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.13.4" cross CrossVersion.full
 

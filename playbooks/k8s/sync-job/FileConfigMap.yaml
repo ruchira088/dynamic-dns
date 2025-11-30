@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sync-job-file-config-map
+  namespace: {{ namespace }}
+data:
+  logback.xml: |
+    <configuration scan="true" scanPeriod="10 seconds">
+        <contextListener class="com.ruchij.job.logger.SyncJobLoggerContextListener"/>
+        
+        <appender name="STD_OUT" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>%date{ISO8601} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            </encoder>
+        </appender>
+        
+        <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashAccessTcpSocketAppender">
+            <destination>server.internal.ruchij.com:5001</destination>
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+                <includeContext>true</includeContext>
+                <includeMdc>true</includeMdc>
+            </encoder>
+        </appender>
+        
+        <logger name="com.ruchij" level="TRACE" additivity="false">
+            <appender-ref ref="STD_OUT"/>
+            <appender-ref ref="LOGSTASH"/>
+        </logger>
+        <root level="WARN">
+            <appender-ref ref="STD_OUT"/>
+            <appender-ref ref="LOGSTASH"/>
+        </root>
+    </configuration>
+
