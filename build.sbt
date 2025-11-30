@@ -1,5 +1,10 @@
-import Dependencies._
-import sbtrelease.ReleaseStateTransformations._
+import Dependencies.*
+import sbtrelease.ReleaseStateTransformations.*
+
+import java.time.Instant
+import scala.language.postfixOps
+import scala.sys.process.*
+import scala.util.Try
 
 inThisBuild {
   Seq(
@@ -20,7 +25,7 @@ lazy val api =
     .settings(
       name := "dynamic-dns-api",
       buildInfoPackage := "com.eed3si9n.ruchij.api",
-      buildInfoKeys := Seq(name, organization, version, scalaVersion, sbtVersion),
+      buildInfoKeys := Seq(name, organization, version, scalaVersion, sbtVersion, buildTimestamp, gitBranch, gitCommit),
       topLevelDirectory := None,
       libraryDependencies ++= Seq(
         http4sDsl,
@@ -55,7 +60,7 @@ lazy val syncJob =
     .settings(
       name := "dynamic-dns-sync-job",
       buildInfoPackage := "com.eed3si9n.ruchij.job",
-      buildInfoKeys := Seq(name, organization, version, scalaVersion, sbtVersion),
+      buildInfoKeys := Seq(name, organization, version, scalaVersion, sbtVersion, buildTimestamp, gitBranch, gitCommit),
       topLevelDirectory := None,
       libraryDependencies ++= Seq(
         http4sEmberClient,
@@ -81,3 +86,13 @@ releaseProcess := Seq(
   setNextVersion,
   commitNextVersion
 )
+
+lazy val buildTimestamp = BuildInfoKey.action("buildTimestamp") { Instant.now() }
+lazy val gitBranch = BuildInfoKey.action("gitBranch") { runGitCommand("git rev-parse --abbrev-ref HEAD") }
+lazy val gitCommit = BuildInfoKey.action("gitCommit") { runGitCommand("git rev-parse --short HEAD") }
+
+def runGitCommand(command: String): Option[String] = {
+  val gitFolder = new File(".git")
+
+  if (gitFolder.exists()) Try(command !!).toOption.map(_.trim).filter(_.nonEmpty) else None
+}

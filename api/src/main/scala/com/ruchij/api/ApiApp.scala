@@ -12,8 +12,7 @@ object ApiApp extends IOApp {
     for {
       configObjectSource <- IO.delay(ConfigSource.defaultApplication)
       serviceConfiguration <- ServiceConfiguration.parse[IO](configObjectSource)
-
-      healthService = new HealthServiceImpl[IO](serviceConfiguration.buildInformation)
+      healthService = new HealthServiceImpl[IO]
 
       _ <-
         EmberServerBuilder.default[IO]

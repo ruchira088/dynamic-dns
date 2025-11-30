@@ -1,8 +1,6 @@
 package com.ruchij.job.config
 
 import cats.ApplicativeError
-import com.ruchij.core.config.BuildInformation
-import com.ruchij.core.config.ConfigReaders.dateTimeConfigReader
 import com.ruchij.core.types.FunctionKTypes
 import com.ruchij.job.config.JobConfigReaders.phoneNumberConfigReader
 import org.http4s.Uri
@@ -15,7 +13,6 @@ case class JobConfiguration(
   apiServer: ApiServerConfiguration,
   cloudflareApi: CloudflareApiConfiguration,
   notification: NotificationConfig,
-  buildInformation: BuildInformation
 )
 
 object JobConfiguration {

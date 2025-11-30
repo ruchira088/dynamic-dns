@@ -35,9 +35,9 @@ class RoutesSpec extends AnyFlatSpec with Matchers {
         "scalaVersion": ${BuildInfo.scalaVersion},
         "sbtVersion": ${BuildInfo.sbtVersion},
         "javaVersion": ${Properties.javaVersion},
-        "gitBranch": "my-branch",
-        "gitCommit": "my-commit",
-        "buildTimestamp": null,
+        "gitBranch": ${BuildInfo.gitBranch},
+        "gitCommit": ${BuildInfo.gitCommit},
+        "buildTimestamp": ${new DateTime(BuildInfo.buildTimestamp.toEpochMilli)},
         "timestamp": $dateTime
       }"""
 

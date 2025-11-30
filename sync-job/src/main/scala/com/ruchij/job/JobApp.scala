@@ -1,10 +1,10 @@
 package com.ruchij.job
 
 import cats.effect.kernel.Async
-import cats.effect.{Concurrent, ExitCode, IO, IOApp}
+import cats.effect.{ExitCode, IO, IOApp}
 import cats.implicits._
 import cats.{Applicative, Monad}
-import com.ruchij.core.config.BuildInformation
+import com.eed3si9n.ruchij.job.BuildInfo
 import com.ruchij.job.config.{DnsConfiguration, JobConfiguration, NotificationConfig}
 import com.ruchij.job.models.JobResult
 import com.ruchij.job.services.dns.{AwsRoute53Service, DnsManagementService}
@@ -23,7 +23,7 @@ object JobApp extends IOApp {
     for {
       configObjectSource <- IO.delay(ConfigSource.defaultApplication)
       jobConfiguration <- JobConfiguration.parse[IO](configObjectSource)
-      _ <- IO.delay(println(banner(jobConfiguration.buildInformation)))
+      _ <- IO.delay(println(banner))
 
       result <- application[IO](jobConfiguration)
 
@@ -31,7 +31,7 @@ object JobApp extends IOApp {
 
     } yield ExitCode.Success
 
-  def application[F[_]: Concurrent: Async: Network](jobConfiguration: JobConfiguration): F[JobResult] =
+  private def application[F[_]: Async: Network](jobConfiguration: JobConfiguration): F[JobResult] =
     EmberClientBuilder.default[F].build.use { httpClient =>
       val hostnameResolver: LocalHostnameResolver[F] = new LocalHostnameResolver[F]
 
@@ -49,7 +49,7 @@ object JobApp extends IOApp {
       yield result
     }
 
-  def execute[F[_]: Monad](
+  private def execute[F[_]: Monad](
     hostnameResolver: HostnameResolver[F],
     myIpRetriever: MyIpRetriever[F],
     dnsManagementService: DnsManagementService[F],
@@ -73,7 +73,7 @@ object JobApp extends IOApp {
 
     } yield result
 
-  def banner(buildInformation: BuildInformation): String =
+  private val banner: String = ""
     raw"""
       |  ____   _   _  ____    ____                            _         _
       | |  _ \ | \ | |/ ___|  / ___|  _   _  _ __    ___      | |  ___  | |__
@@ -82,9 +82,9 @@ object JobApp extends IOApp {
       | |____/ |_| \_||____/  |____/  \__, ||_| |_| \___|  \___/  \___/ |_.__/
       |                               |___/
       | DNS Sync Job
-      |   Git branch: ${buildInformation.gitBranch.getOrElse("")}
-      |   Git commit: ${buildInformation.gitCommit.getOrElse("")}
-      |   Build timestamp: ${buildInformation.buildTimestamp.map(_.toString).getOrElse("")}
+      |   Git branch: ${BuildInfo.gitBranch.getOrElse("")}
+      |   Git commit: ${BuildInfo.gitCommit.getOrElse("")}
+      |   Build timestamp: ${BuildInfo.buildTimestamp.toString}
       |""".stripMargin
 
 }
