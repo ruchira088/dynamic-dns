@@ -2,10 +2,10 @@ import sbt._
 
 object Dependencies
 {
-  val ScalaVersion = "2.13.15"
-  val Http4sVersion = "0.23.30"
-  val CirceVersion = "0.14.10"
-  val AwsSdkVersion = "2.29.40"
+  val ScalaVersion = "2.13.18"
+  val Http4sVersion = "0.23.33"
+  val CirceVersion = "0.14.15"
+  val AwsSdkVersion = "2.39.5"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
 
@@ -21,23 +21,23 @@ object Dependencies
 
   lazy val circeLiteral = "io.circe" %% "circe-literal" % CirceVersion
 
-  lazy val jodaTime = "joda-time" % "joda-time" % "2.13.0"
+  lazy val jodaTime = "joda-time" % "joda-time" % "2.14.0"
 
-  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.17.8"
+  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.17.9"
 
   lazy val route53 = "software.amazon.awssdk" % "route53" % AwsSdkVersion
 
-  lazy val awsLambdaJavaCore = "com.amazonaws" % "aws-lambda-java-core" % "1.2.3"
+  lazy val awsLambdaJavaCore = "com.amazonaws" % "aws-lambda-java-core" % "1.4.0"
 
-  lazy val awsLambdaJavaEvents = "com.amazonaws" % "aws-lambda-java-events" % "3.14.0"
+  lazy val awsLambdaJavaEvents = "com.amazonaws" % "aws-lambda-java-events" % "3.16.1"
 
   lazy val awsSns = "software.amazon.awssdk" % "sns" % AwsSdkVersion
 
-  lazy val phoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.13.52"
+  lazy val phoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.19"
 
-  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.5.15"
+  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.5.21"
 
-  lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.13.3" cross CrossVersion.full
+  lazy val kindProjector = "org.typelevel" %% "kind-projector" % "0.13.4" cross CrossVersion.full
 
   lazy val betterMonadicFor = "com.olegpy" %% "better-monadic-for" % "0.3.1"
 
