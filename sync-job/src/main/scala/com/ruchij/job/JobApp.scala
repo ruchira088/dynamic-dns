@@ -13,21 +13,23 @@ import com.ruchij.job.services.ip.{ApiMyIpRetriever, AwsMyIpRetriever, Consolida
 import com.ruchij.job.services.notification.sms.{AmazonSnsNotificationService, SmsNotificationService}
 import fs2.io.net.Network
 import org.http4s.ember.client.EmberClientBuilder
+import org.slf4j.LoggerFactory
 import pureconfig.ConfigSource
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object JobApp extends IOApp {
+  private val logger = LoggerFactory.getLogger(classOf[JobApp.type])
 
   override def run(args: List[String]): IO[ExitCode] =
     for {
       configObjectSource <- IO.delay(ConfigSource.defaultApplication)
       jobConfiguration <- JobConfiguration.parse[IO](configObjectSource)
-      _ <- IO.delay(println(banner))
+      _ <- IO.delay(logger.info(banner))
 
       result <- application[IO](jobConfiguration)
 
-      _ <- IO.delay(println(result.message))
+      _ <- IO.delay(logger.info(result.message))
 
     } yield ExitCode.Success
 
@@ -73,7 +75,7 @@ object JobApp extends IOApp {
 
     } yield result
 
-  private val banner: String = ""
+  private val banner: String =
     raw"""
       |  ____   _   _  ____    ____                            _         _
       | |  _ \ | \ | |/ ___|  / ___|  _   _  _ __    ___      | |  ___  | |__

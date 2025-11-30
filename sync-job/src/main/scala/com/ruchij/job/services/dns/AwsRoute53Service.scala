@@ -22,7 +22,7 @@ class AwsRoute53Service[F[_]: Async](route53AsyncClient: Route53AsyncClient)(
   implicit executionContext: ExecutionContext
 ) extends DnsManagementService[F] {
 
-  val awsHostedZones: F[Seq[HostedZone]] =
+  private val awsHostedZones: F[Seq[HostedZone]] =
     Async[F].async_[Seq[HostedZone]] { callback =>
       route53AsyncClient
         .listHostedZones()
@@ -85,7 +85,7 @@ class AwsRoute53Service[F[_]: Async](route53AsyncClient: Route53AsyncClient)(
 }
 
 object AwsRoute53Service {
-  val dnsTtl: FiniteDuration = 300 seconds
+  private val dnsTtl: FiniteDuration = 300 seconds
 
   def create[F[_]: Async](implicit executionContext: ExecutionContext): F[AwsRoute53Service[F]] =
     Sync[F].delay(Route53AsyncClient.builder().region(Region.AWS_GLOBAL).build())
