@@ -4,18 +4,6 @@ Transform: AWS::Serverless-2016-10-31
 Description: dynamic-dns-serverless-api
 
 Parameters:
-  GitCommit:
-    Type: String
-    Default: "unknown"
-    Description: Git commit hash of the deployed build
-  GitBranch:
-    Type: String
-    Default: "unknown"
-    Description: Git branch of the deployed build
-  BuildTimestamp:
-    Type: String
-    Default: "1970-01-01T00:00:00Z"
-    Description: ISO 8601 timestamp of the build
   DomainName:
     Type: String
     Default: ip.ruchij.com
@@ -30,11 +18,6 @@ Globals:
     Runtime: java25
     Timeout: 25
     MemorySize: 512
-    Environment:
-      Variables:
-        GIT_COMMIT: !Ref GitCommit
-        GIT_BRANCH: !Ref GitBranch
-        BUILD_TIMESTAMP: !Ref BuildTimestamp
 
 Resources:
   ServerlessApi:
@@ -50,7 +33,7 @@ Resources:
       FunctionName: dynamic-dns-serverless-api-production-healthCheck
       Handler: com.ruchij.serverless.handlers.ApiGatewayRequestHandler
       Description: Health check endpoint
-      CodeUri: ../../serverless/target/scala-2.13/dynamic-dns-serverless-api.jar
+      CodeUri: target/scala-2.13/dynamic-dns-serverless-api.jar
       Events:
         HealthCheckGet:
           Type: Api
@@ -65,7 +48,7 @@ Resources:
       FunctionName: dynamic-dns-serverless-api-production-ipAddress
       Handler: com.ruchij.serverless.handlers.ApiGatewayRequestHandler
       Description: Responds with the IP address of the request
-      CodeUri: ../../serverless/target/scala-2.13/dynamic-dns-serverless-api.jar
+      CodeUri: target/scala-2.13/dynamic-dns-serverless-api.jar
       Events:
         IpAddressGet:
           Type: Api
