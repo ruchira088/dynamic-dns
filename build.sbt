@@ -10,7 +10,6 @@ inThisBuild {
   Seq(
     organization := "com.ruchij",
     scalaVersion := Dependencies.ScalaVersion,
-    maintainer := "me@ruchij.com",
     scalacOptions ++= Seq("-Xlint", "-feature", "-Wconf:cat=lint-byname-implicit:s"),
     addCompilerPlugin(kindProjector),
     addCompilerPlugin(betterMonadicFor),

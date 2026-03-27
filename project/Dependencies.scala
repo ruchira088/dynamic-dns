@@ -5,7 +5,7 @@ object Dependencies
   val ScalaVersion = "2.13.18"
   val Http4sVersion = "0.23.33"
   val CirceVersion = "0.14.15"
-  val AwsSdkVersion = "2.39.5"
+  val AwsSdkVersion = "2.42.22"
 
   lazy val http4sDsl = "org.http4s" %% "http4s-dsl" % Http4sVersion
 
@@ -21,9 +21,9 @@ object Dependencies
 
   lazy val circeLiteral = "io.circe" %% "circe-literal" % CirceVersion
 
-  lazy val jodaTime = "joda-time" % "joda-time" % "2.14.0"
+  lazy val jodaTime = "joda-time" % "joda-time" % "2.14.1"
 
-  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.17.9"
+  lazy val pureconfig = "com.github.pureconfig" %% "pureconfig" % "0.17.10"
 
   lazy val route53 = "software.amazon.awssdk" % "route53" % AwsSdkVersion
 
@@ -33,9 +33,9 @@ object Dependencies
 
   lazy val awsSns = "software.amazon.awssdk" % "sns" % AwsSdkVersion
 
-  lazy val phoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.19"
+  lazy val phoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.27"
 
-  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.5.21"
+  lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.5.32"
 
   lazy val logstashLogbackEncoder = "net.logstash.logback" % "logstash-logback-encoder" % "9.0"
 
@@ -43,7 +43,7 @@ object Dependencies
 
   lazy val betterMonadicFor = "com.olegpy" %% "better-monadic-for" % "0.3.1"
 
-  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.19"
+  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.2.20"
 
   lazy val pegdown = "org.pegdown" % "pegdown" % "1.6.0"
 }
