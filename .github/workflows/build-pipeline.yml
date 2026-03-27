@@ -207,7 +207,7 @@ jobs:
           role-session-name: dynamic-dns-github-release
           role-to-assume: "arn:aws:iam::365562660444:role/github_iam_role"
 
-      - name: Deploy to K8s server
+      - name: Create GitHub Release
         run: ansible-playbook -vvv playbooks/github-release.yml
 
   send-notification:
