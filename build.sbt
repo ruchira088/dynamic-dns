@@ -1,5 +1,4 @@
 import Dependencies._
-import sbtrelease.ReleaseStateTransformations._
 
 import java.time.Instant
 import scala.language.postfixOps
@@ -75,18 +74,6 @@ lazy val syncJob =
       )
     )
     .dependsOn(core)
-
-releaseProcess := Seq(
-  checkSnapshotDependencies,
-  inquireVersions,
-  runClean,
-  setReleaseVersion,
-  commitReleaseVersion,
-  tagRelease,
-  pushChanges,
-  setNextVersion,
-  commitNextVersion
-)
 
 lazy val buildTimestamp = BuildInfoKey.action("buildTimestamp") { Instant.now() }
 lazy val gitBranch = BuildInfoKey.action("gitBranch") { runGitCommand("git rev-parse --abbrev-ref HEAD") }

@@ -30,7 +30,6 @@ class RoutesSpec extends AnyFlatSpec with Matchers {
     val expectedJsonResponse =
       json"""{
         "serviceName": "dynamic-dns-api",
-        "serviceVersion": ${BuildInfo.version},
         "organization": "com.ruchij",
         "scalaVersion": ${BuildInfo.scalaVersion},
         "sbtVersion": ${BuildInfo.sbtVersion},
