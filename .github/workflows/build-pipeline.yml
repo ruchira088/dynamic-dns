@@ -190,6 +190,26 @@ jobs:
       - name: Deploy to K8s server
         run: ansible-playbook -vvv playbooks/k8s-deploy.yml
 
+  create-github-release:
+    runs-on: ubuntu-latest
+    needs:
+      - deploy-sam
+      - deploy-to-k8s
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          aws-region: ap-southeast-2
+          role-session-name: dynamic-dns-github-release
+          role-to-assume: "arn:aws:iam::365562660444:role/github_iam_role"
+
+      - name: Deploy to K8s server
+        run: ansible-playbook -vvv playbooks/github-release.yml
+
   send-notification:
     runs-on: ubuntu-latest
     if: always()
@@ -203,6 +223,7 @@ jobs:
       - create-terraform-resources
       - deploy-sam
       - deploy-to-k8s
+      - create-github-release
 
     steps:
       - name: Send Slack notification
