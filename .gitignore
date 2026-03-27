@@ -6,8 +6,7 @@ target
 
 .DS_Store
 
-node_modules
-.serverless
+.aws-sam
 
 playbooks/k8s-output
 playbooks/docker-output

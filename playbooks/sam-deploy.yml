@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Gather git information
+      import_tasks: tasks/git-info.yml
+
+    - name: Build serverless fat JAR
+      shell: cd ../ && sbt clean serverless/assembly
+
+    - name: Build SAM application
+      shell: cd serverless && sam build
+
+    - name: Deploy SAM application
+      shell: |
+        cd serverless &&
+          sam deploy \
+            --parameter-overrides \
+              "GitCommit={{ git_commit }}" \
+              "GitBranch={{ git_branch }}" \
+              "BuildTimestamp={{ ansible_date_time.iso8601 }}"
