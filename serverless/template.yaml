@@ -118,7 +118,6 @@ Resources:
             HostedZoneId: !GetAtt ApiDomainName.RegionalHostedZoneId
 
 Outputs:
-  ApiUrl:
   DomainUrl:
     Description: Domain URL
     Value: !Sub "https://${DomainName}/"
