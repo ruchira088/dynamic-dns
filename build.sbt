@@ -1,9 +1,9 @@
-import Dependencies.*
-import sbtrelease.ReleaseStateTransformations.*
+import Dependencies._
+import sbtrelease.ReleaseStateTransformations._
 
 import java.time.Instant
 import scala.language.postfixOps
-import scala.sys.process.*
+import scala.sys.process._
 import scala.util.Try
 
 inThisBuild {
