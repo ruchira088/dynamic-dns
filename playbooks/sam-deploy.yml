@@ -10,11 +10,11 @@
       shell: cd ../ && sbt clean serverless/assembly
 
     - name: Build SAM application
-      shell: cd serverless && sam build
+      shell: cd ../serverless && sam build
 
     - name: Deploy SAM application
       shell: |
-        cd serverless &&
+        cd ../serverless &&
           sam deploy \
             --parameter-overrides \
               "GitCommit={{ git_commit }}" \
